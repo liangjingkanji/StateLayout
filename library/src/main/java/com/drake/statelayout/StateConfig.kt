@@ -1,4 +1,4 @@
-package com.drake.library
+package com.drake.statelayout
 
 import android.view.View
 import androidx.annotation.LayoutRes

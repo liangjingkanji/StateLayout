@@ -1,7 +1,7 @@
-package com.drake.statelayout
+package com.drake.statelayout.sample
 
 import android.app.Application
-import com.drake.library.StateConfig
+import com.drake.statelayout.StateConfig
 
 class MyApplication : Application() {
     override fun onCreate() {

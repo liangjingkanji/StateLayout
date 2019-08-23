@@ -35,7 +35,7 @@ allprojects {
 module 的 build.gradle
 
 ```
-implementation 'com.github.liangjingkanji:StateLayout:1.0'
+implementation 'com.github.liangjingkanji:StateLayout:1.0.1'
 ```
 
 ### 全局状态配置

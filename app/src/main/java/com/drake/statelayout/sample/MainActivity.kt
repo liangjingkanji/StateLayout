@@ -1,11 +1,11 @@
-package com.drake.statelayout
+package com.drake.statelayout.sample
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.drake.library.StateLayout
-import com.drake.library.state
+import com.drake.statelayout.StateLayout
+import com.drake.statelayout.state
 
 class MainActivity : AppCompatActivity() {
 

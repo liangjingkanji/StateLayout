@@ -5,7 +5,7 @@
  * Date：5/26/19 9:26 AM
  */
 
-package com.drake.library
+package com.drake.statelayout
 
 import android.content.Context
 import android.net.ConnectivityManager
