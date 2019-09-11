@@ -12,6 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 
 fun Activity.state(): StateLayout {
     val view = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
@@ -19,7 +22,20 @@ fun Activity.state(): StateLayout {
 }
 
 fun Fragment.state(): StateLayout {
-    return view!!.state()
+    val stateLayout = view!!.state()
+
+    lifecycle.addObserver(object : LifecycleObserver {
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        fun removeState() {
+            val parent = stateLayout.parent as ViewGroup
+            parent.removeView(stateLayout)
+            lifecycle.removeObserver(this)
+        }
+
+    })
+
+    return stateLayout
 }
 
 fun View.state(): StateLayout {
