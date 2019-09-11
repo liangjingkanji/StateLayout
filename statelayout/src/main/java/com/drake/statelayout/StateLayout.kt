@@ -118,9 +118,9 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 判断是否有网络连接
      */
-    private fun Context.isNetworkConnected(): Boolean {
-        if (context != null) {
-            val mConnectivityManager = context.getSystemService(
+    private fun Context?.isNetworkConnected(): Boolean {
+        if (this != null) {
+            val mConnectivityManager = getSystemService(
                 Context.CONNECTIVITY_SERVICE
             ) as ConnectivityManager
             val mNetworkInfo = mConnectivityManager.activeNetworkInfo
