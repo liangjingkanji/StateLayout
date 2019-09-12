@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) 2018, Umbrella CompanyLimited All rights reserved.
+ * Project：StateLayout
+ * Author：Drake
+ * Date：9/11/19 5:30 PM
+ */
+
 package com.drake.statelayout
 
 import android.view.View

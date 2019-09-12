@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2018, Umbrella CompanyLimited All rights reserved.
- * Project：TX2
- * Author：两津勘吉
- * Date：5/26/19 9:26 AM
+ * Project：StateLayout
+ * Author：Drake
+ * Date：9/11/19 5:30 PM
  */
 
 package com.drake.statelayout
