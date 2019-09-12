@@ -217,7 +217,12 @@ class StateLayout @JvmOverloads constructor(
         return view
     }
 
-    internal fun setContentView(view: View) {
+
+    /**
+     * 标记视图为内容布局, 一般用于扩展替换内容
+     * @param view View
+     */
+    fun setContentView(view: View) {
         contentViews[contentId] = view
     }
 }

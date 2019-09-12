@@ -43,8 +43,8 @@ fun View.state(): StateLayout {
     val parent = parent as ViewGroup
     stateLayout.id = id
     val index = parent.indexOfChild(this)
-    parent.removeView(this)
     val layoutParams = layoutParams
+    parent.removeView(this)
     parent.addView(stateLayout, index, layoutParams)
 
     if (this is ConstraintLayout) {
