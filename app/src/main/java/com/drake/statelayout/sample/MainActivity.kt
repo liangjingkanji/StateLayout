@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
                 // can retry request
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
