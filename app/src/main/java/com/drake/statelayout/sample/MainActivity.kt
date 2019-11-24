@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        state().apply {
+        state = state().apply {
 
             onRefresh {
                 // 一般在这里进行网络请求
