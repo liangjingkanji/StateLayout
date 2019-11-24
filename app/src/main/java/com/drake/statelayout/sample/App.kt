@@ -3,7 +3,7 @@ package com.drake.statelayout.sample
 import android.app.Application
 import com.drake.statelayout.StateConfig
 
-class MyApplication : Application() {
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
@@ -12,9 +12,7 @@ class MyApplication : Application() {
             errorLayout = R.layout.layout_error
             loadingLayout = R.layout.layout_loading
 
-            onLoading {
-                // do animation
-            }
+            setRetryIds(R.id.msg)
         }
     }
 }

@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.drake.statelayout.StateLayout
 import com.drake.statelayout.state
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,14 +16,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        state = state().apply {
-            emptyLayout = R.layout.layout_empty
 
-            onError {
-                // can retry request
+
+        state().apply {
+
+            onRefresh {
+                // 一般在这里进行网络请求
+
+                thread {
+                    Thread.sleep(2000)
+                    showContent()
+                }
             }
-        }
 
+            showLoading()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

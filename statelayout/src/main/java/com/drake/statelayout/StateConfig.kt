@@ -8,11 +8,12 @@
 package com.drake.statelayout
 
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 
 
 /**
- * 全局的单列多状态布局配置
+ * 全局的多状态布局配置
  */
 object StateConfig {
 
@@ -23,19 +24,25 @@ object StateConfig {
     @LayoutRes
     var loadingLayout = View.NO_ID
 
-    internal var onEmpty: (View.() -> Unit)? = null
-    internal var onError: (View.() -> Unit)? = null
-    internal var onLoading: (View.() -> Unit)? = null
+    internal var retryIds: List<Int>? = null
+    internal var onEmpty: (View.(StateLayout) -> Unit)? = null
+    internal var onError: (View.(StateLayout) -> Unit)? = null
+    internal var onLoading: (View.(StateLayout) -> Unit)? = null
 
-    fun onEmpty(block: View.() -> Unit) {
+
+    fun onEmpty(block: View.(StateLayout) -> Unit) {
         onEmpty = block
     }
 
-    fun onLoading(block: View.() -> Unit) {
+    fun onLoading(block: View.(StateLayout) -> Unit) {
         onLoading = block
     }
 
-    fun onError(block: View.() -> Unit) {
+    fun onError(block: View.(StateLayout) -> Unit) {
         onError = block
+    }
+
+    fun setRetryIds(@IdRes vararg ids: Int) {
+        retryIds = ids.toList()
     }
 }

@@ -4,7 +4,7 @@
  * Author：Drake
  * Date：9/11/19 5:30 PM
  */
-
+@file:Suppress("unused")
 package com.drake.statelayout
 
 import android.app.Activity
@@ -32,7 +32,6 @@ fun Fragment.state(): StateLayout {
             parent.removeView(stateLayout)
             lifecycle.removeObserver(this)
         }
-
     })
 
     return stateLayout
