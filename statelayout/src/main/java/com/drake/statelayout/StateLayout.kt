@@ -218,7 +218,7 @@ class StateLayout @JvmOverloads constructor(
                         }
 
                         retryIds?.forEach {
-                            view.findViewById<View>(it).throttleClick { showLoading() }
+                            view.findViewById<View>(it)?.throttleClick { showLoading() }
                         }
 
                         if (onError == null) {
