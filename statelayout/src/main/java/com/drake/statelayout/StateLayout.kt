@@ -106,8 +106,9 @@ class StateLayout @JvmOverloads constructor(
      * @see showEmpty
      * @see StateConfig.onEmpty
      */
-    fun onEmpty(block: View.(StateLayout) -> Unit) {
+    fun onEmpty(block: View.(StateLayout) -> Unit): StateLayout {
         onEmpty = block
+        return this
     }
 
     /**
@@ -115,8 +116,9 @@ class StateLayout @JvmOverloads constructor(
      * @see showLoading
      * @see StateConfig.onLoading
      */
-    fun onLoading(block: View.(StateLayout) -> Unit) {
+    fun onLoading(block: View.(StateLayout) -> Unit): StateLayout {
         onLoading = block
+        return this
     }
 
     /**
@@ -124,15 +126,17 @@ class StateLayout @JvmOverloads constructor(
      * @see showError
      * @see StateConfig.onError
      */
-    fun onError(block: View.(StateLayout) -> Unit) {
+    fun onError(block: View.(StateLayout) -> Unit): StateLayout {
         onError = block
+        return this
     }
 
     /**
      * 当[showLoading]时会回调该函数参数, 一般将网络请求等异步操作放入其中
      */
-    fun onRefresh(block: StateLayout.(loading: View) -> Unit) {
+    fun onRefresh(block: StateLayout.(loading: View) -> Unit): StateLayout {
         onRefresh = block
+        return this
     }
 
     // </editor-fold>
@@ -185,8 +189,9 @@ class StateLayout @JvmOverloads constructor(
      * 设置[errorLayout]中的视图点击后会执行[StateLayout.showLoading]
      * 并且500ms内防重复点击
      */
-    fun setRetryIds(@IdRes vararg ids: Int) {
+    fun setRetryIds(@IdRes vararg ids: Int): StateLayout {
         retryIds = ids.toList()
+        return this
     }
 
     /**
