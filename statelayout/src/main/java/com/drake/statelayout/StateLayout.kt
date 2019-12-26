@@ -40,6 +40,7 @@ class StateLayout @JvmOverloads constructor(
     private var contentId: Int = -2
     private val contentViews = ArrayMap<Int, View>()
     private var retryIds: List<Int>? = null
+    private var refresh = true
 
     // <editor-fold desc="设置缺省页">
 
@@ -148,16 +149,14 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 有网则显示加载中, 无网络直接显示错误
      */
-    fun showLoading() {
-        if (context.isNetConnected()) {
-            if (loadingLayout == NO_ID) {
-                loadingLayout = StateConfig.loadingLayout
-            }
-            if (loadingLayout != NO_ID) {
-                show(loadingLayout)
-            }
-        } else {
-            showError()
+    fun showLoading(refresh: Boolean = true) {
+        this.refresh = refresh
+
+        if (loadingLayout == NO_ID) {
+            loadingLayout = StateConfig.loadingLayout
+        }
+        if (loadingLayout != NO_ID) {
+            show(loadingLayout)
         }
     }
 
@@ -241,7 +240,10 @@ class StateLayout @JvmOverloads constructor(
                             }
                         }
                         onLoading?.invoke(view, this)
-                        onRefresh?.invoke(this, view)
+
+                        if (refresh) {
+                            onRefresh?.invoke(this, view)
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -281,7 +283,7 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 判断是否有网络连接
      */
-    private fun Context?.isNetConnected(): Boolean {
+    fun Context?.isNetConnected(): Boolean {
         if (this != null) {
             val mConnectivityManager = getSystemService(
                 Context.CONNECTIVITY_SERVICE

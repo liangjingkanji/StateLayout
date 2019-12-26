@@ -17,20 +17,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+        state = state()
+        state.onRefresh {
+            // 一般在这里进行网络请求
 
-        state = state().apply {
-
-            onRefresh {
-                // 一般在这里进行网络请求
-
-                thread {
-                    Thread.sleep(2000)
-                    showContent()
-                }
+            thread {
+                Thread.sleep(2000)
+                showContent()
             }
 
-            showLoading()
-        }
+        }.showLoading()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -37,12 +37,25 @@ allprojects {
 module 的 build.gradle
 
 ```groovy
-implementation 'com.github.liangjingkanji:StateLayout:1.0.7'
+implementation 'com.github.liangjingkanji:StateLayout:1.0.8'
 ```
 
 ### 常见问题
 
 先设置生命周期函数`on**()`, 再显示缺省页`show**()`才会执行生命周期函数
+
+
+
+### 显示缺省页
+
+```
+showLoading(refresh:Boolean = true) // 参数表示是否回调onRefresh函数
+showEmpty()
+showContent()
+showError()
+```
+
+
 
 ### 全局状态配置
 
