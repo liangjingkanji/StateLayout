@@ -22,6 +22,8 @@ Android上最强大的缺省页(状态页面)工具
 
 
 
+配合网络请求库可以做到自动处理缺省页: [Net](https://github.com/liangjingkanji/Net)
+
 ### 依赖
 
 project 的 build.gradle
