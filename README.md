@@ -10,12 +10,15 @@ Android上最强大的缺省页(状态页面)工具
  * 单例配置
  * 生命周期(可以加载动画或者处理事件)
  * 刷新回调
+ * 获取当前缺省页状态
+ * Loading缺省页支持进度回调
  * 支持activity/fragment/view替换
  * 支持Java或者XML实现
  * 无网络情况下showLoading显示错误布局, 有网则显示加载中布局
  * 支持配合RecyclerView的下拉刷新
  * 支持配合网络请求自动化显示
  * 异步线程显示缺省页
+ * 可以将数据作为tag传给页面回调函数处理
 
 
 
@@ -37,7 +40,7 @@ allprojects {
 module 的 build.gradle
 
 ```groovy
-implementation 'com.github.liangjingkanji:StateLayout:1.0.8'
+implementation 'com.github.liangjingkanji:StateLayout:1.0.9'
 ```
 
 ### 常见问题
@@ -49,13 +52,15 @@ implementation 'com.github.liangjingkanji:StateLayout:1.0.8'
 ### 显示缺省页
 
 ```
-showLoading(refresh:Boolean = true) // 参数表示是否回调onRefresh函数
-showEmpty()
-showContent()
-showError()
+showLoading(tag:Any? = null, refresh:Boolean = true) // 参数表示是否回调onRefresh函数
+showEmpty(tag:Any? = null)
+showContent(tag:Any? = null)
+showError(tag:Any? = null)
 ```
 
 
+
+1. showLoading重复执行不会回调onRefresh, 但是会一直回调onLoading, 可以在其回调中进行进度变更
 
 ### 全局状态配置
 

@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
 
             thread {
                 Thread.sleep(2000)
-                showContent()
             }
 
         }.showLoading()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_loading -> state.showLoading()
             R.id.menu_content -> state.showContent()
-            R.id.menu_error -> state.showError()
+            R.id.menu_error -> state.showError(NullPointerException())
             R.id.menu_empty -> state.showEmpty()
         }
         return true

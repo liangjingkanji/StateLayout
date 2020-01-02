@@ -34,13 +34,23 @@ class StateLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) :
-    FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var contentId: Int = -2
     private val contentViews = ArrayMap<Int, View>()
     private var retryIds: List<Int>? = null
     private var refresh = true
+
+    private var onEmpty: (View.(Any?) -> Unit)? = null
+    private var onError: (View.(Any?) -> Unit)? = null
+    private var onLoading: (View.(Any?) -> Unit)? = null
+    private var onRefresh: (StateLayout.(View) -> Unit)? = null
+
+
+    var status = Status.CONTENT
+        private set(value) {
+            field = value
+        }
 
     // <editor-fold desc="设置缺省页">
 
@@ -73,10 +83,6 @@ class StateLayout @JvmOverloads constructor(
 
     // </editor-fold>
 
-    private var onEmpty: (View.(StateLayout) -> Unit)? = null
-    private var onError: (View.(StateLayout) -> Unit)? = null
-    private var onLoading: (View.(StateLayout) -> Unit)? = null
-    private var onRefresh: (StateLayout.(View) -> Unit)? = null
 
     init {
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.StateLayout)
@@ -107,7 +113,7 @@ class StateLayout @JvmOverloads constructor(
      * @see showEmpty
      * @see StateConfig.onEmpty
      */
-    fun onEmpty(block: View.(StateLayout) -> Unit): StateLayout {
+    fun onEmpty(block: View.(Any?) -> Unit): StateLayout {
         onEmpty = block
         return this
     }
@@ -117,7 +123,7 @@ class StateLayout @JvmOverloads constructor(
      * @see showLoading
      * @see StateConfig.onLoading
      */
-    fun onLoading(block: View.(StateLayout) -> Unit): StateLayout {
+    fun onLoading(block: View.(Any?) -> Unit): StateLayout {
         onLoading = block
         return this
     }
@@ -127,7 +133,7 @@ class StateLayout @JvmOverloads constructor(
      * @see showError
      * @see StateConfig.onError
      */
-    fun onError(block: View.(StateLayout) -> Unit): StateLayout {
+    fun onError(block: View.(Any?) -> Unit): StateLayout {
         onError = block
         return this
     }
@@ -149,32 +155,41 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 有网则显示加载中, 无网络直接显示错误
      */
-    fun showLoading(refresh: Boolean = true) {
+    fun showLoading(tag: Any? = null, refresh: Boolean = true) {
         this.refresh = refresh
 
         if (loadingLayout == NO_ID) {
             loadingLayout = StateConfig.loadingLayout
         }
+
+        if (status == Status.LOADING) {
+            if (onLoading == null) {
+                StateConfig.onLoading?.let { onLoading = it }
+            }
+            onLoading?.invoke(getView(loadingLayout), tag)
+            return
+        }
+
         if (loadingLayout != NO_ID) {
-            show(loadingLayout)
+            show(loadingLayout, tag)
         }
     }
 
-    fun showEmpty() {
+    fun showEmpty(tag: Any? = null) {
         if (emptyLayout == NO_ID) {
             emptyLayout = StateConfig.emptyLayout
         }
         if (emptyLayout != NO_ID) {
-            show(emptyLayout)
+            show(emptyLayout, tag)
         }
     }
 
-    fun showError() {
+    fun showError(tag: Any? = null) {
         if (errorLayout == NO_ID) {
             errorLayout = StateConfig.errorLayout
         }
         if (errorLayout != NO_ID) {
-            show(errorLayout)
+            show(errorLayout, tag)
         }
     }
 
@@ -196,56 +211,59 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 显示视图
      */
-    private fun show(layoutId: Int) {
+    private fun show(layoutId: Int, tag: Any? = null) {
 
         runMain {
-            for (view in contentViews.values) {
-                view.visibility = View.GONE
-            }
+
+            for (view in contentViews.values) view.visibility = View.GONE
 
             try {
                 val view = getView(layoutId)
                 view.visibility = View.VISIBLE
-                when (layoutId) {
-                    emptyLayout -> {
-                        if (onEmpty == null) {
-                            StateConfig.onEmpty?.let {
-                                onEmpty = it
-                            }
-                        }
-                        onEmpty?.invoke(view, this)
-                    }
-                    errorLayout -> {
 
-                        if (retryIds == null) {
-                            retryIds = StateConfig.retryIds
-                        }
+                when (layoutId) {
+
+                    // 空
+                    emptyLayout -> {
+                        status = Status.EMPTY
+
+                        if (onEmpty == null) StateConfig.onEmpty?.let { onEmpty = it }
+
+                        onEmpty?.invoke(view, tag)
+                    }
+
+                    // 错误
+                    errorLayout -> {
+                        status = Status.ERROR
+
+                        if (retryIds == null) retryIds = StateConfig.retryIds
 
                         retryIds?.forEach {
                             view.findViewById<View>(it)?.throttleClick { showLoading() }
                         }
 
-                        if (onError == null) {
-                            StateConfig.onError?.let {
-                                onError = it
-                            }
-                        }
+                        if (onError == null) StateConfig.onError?.let { onError = it }
 
-                        onError?.invoke(view, this)
+                        onError?.invoke(view, tag)
                     }
+
+                    // 加载中
                     loadingLayout -> {
-                        if (onLoading == null) {
-                            StateConfig.onLoading?.let {
-                                onLoading = it
-                            }
-                        }
-                        onLoading?.invoke(view, this)
+                        status = Status.LOADING
 
-                        if (refresh) {
-                            onRefresh?.invoke(this, view)
+                        if (onLoading == null) {
+                            StateConfig.onLoading?.let { onLoading = it }
                         }
+
+                        onLoading?.invoke(view, tag)
+
+                        if (refresh) onRefresh?.invoke(this, view)
                     }
+
+                    // 内容
+                    else -> status = Status.CONTENT
                 }
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

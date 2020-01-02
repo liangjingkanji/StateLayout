@@ -5,9 +5,10 @@
   ~ Date：5/26/19 10:41 AM
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
     <ProgressBar
@@ -16,4 +17,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/iv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="加载中" />
+
+</LinearLayout>
