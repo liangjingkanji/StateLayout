@@ -5,7 +5,7 @@
  * Date：9/11/19 5:30 PM
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "MemberVisibilityCanBePrivate", "NAME_SHADOWING", "RedundantSetter")
 
 package com.drake.statelayout
 
@@ -46,6 +46,8 @@ class StateLayout @JvmOverloads constructor(
     private var onLoading: (View.(Any?) -> Unit)? = null
     private var onRefresh: (StateLayout.(View) -> Unit)? = null
 
+    private var stateChanged = false
+    private var trigger = false
 
     var status = Status.CONTENT
         private set(value) {
@@ -194,6 +196,7 @@ class StateLayout @JvmOverloads constructor(
     }
 
     fun showContent() {
+        if (trigger && stateChanged) return
         show(contentId)
     }
 
@@ -209,9 +212,23 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
+     * 用于网络请求的触发器
+     */
+    fun trigger(): Boolean {
+        trigger = !trigger
+        if (!trigger) stateChanged = false
+        return trigger
+    }
+
+
+    /**
      * 显示视图
      */
     private fun show(layoutId: Int, tag: Any? = null) {
+
+        if (trigger) {
+            stateChanged = true
+        }
 
         runMain {
 
