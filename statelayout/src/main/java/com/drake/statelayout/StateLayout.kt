@@ -49,10 +49,10 @@ class StateLayout @JvmOverloads constructor(
     private var stateChanged = false
     private var trigger = false
 
+    var loaded = false
+
     var status = Status.CONTENT
-        private set(value) {
-            field = value
-        }
+        private set
 
     // <editor-fold desc="设置缺省页">
 
@@ -197,6 +197,7 @@ class StateLayout @JvmOverloads constructor(
 
     fun showContent() {
         if (trigger && stateChanged) return
+        loaded = true
         show(contentId)
     }
 

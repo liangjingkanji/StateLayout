@@ -42,7 +42,7 @@ allprojects {
 module 的 build.gradle
 
 ```groovy
-implementation 'com.github.liangjingkanji:StateLayout:1.0.10'
+implementation 'com.github.liangjingkanji:StateLayout:1.0.11'
 ```
 
 ### 常见问题
