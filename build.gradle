@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) 2018, Umbrella CompanyLimited All rights reserved.
+ * Project：StateLayout
+ * Author：drake
+ * Date：7/14/20 2:23 PM
+ */
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {

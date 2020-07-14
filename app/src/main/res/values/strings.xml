@@ -1,3 +1,12 @@
+<!--
+  ~ Copyright (C) 2018, Umbrella CompanyLimited All rights reserved.
+  ~ Project：StateLayout
+  ~ Author：drake
+  ~ Date：7/14/20 2:23 PM
+  -->
+
 <resources>
     <string name="app_name">StateLayout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

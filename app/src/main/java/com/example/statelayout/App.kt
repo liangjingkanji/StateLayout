@@ -1,4 +1,11 @@
-package com.drake.statelayout.sample
+/*
+ * Copyright (C) 2018, Umbrella CompanyLimited All rights reserved.
+ * Project：StateLayout
+ * Author：drake
+ * Date：7/14/20 2:23 PM
+ */
+
+package com.example.statelayout
 
 import android.app.Application
 import com.drake.statelayout.StateConfig

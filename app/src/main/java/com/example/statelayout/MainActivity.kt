@@ -1,4 +1,11 @@
-package com.drake.statelayout.sample
+/*
+ * Copyright (C) 2018, Umbrella CompanyLimited All rights reserved.
+ * Project：StateLayout
+ * Author：drake
+ * Date：7/14/20 2:23 PM
+ */
+
+package com.example.statelayout
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,30 +17,24 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var state: StateLayout
+    private lateinit var state: StateLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
         state = state()
         state.onRefresh {
             // 一般在这里进行网络请求
-
             thread {
                 Thread.sleep(2000)
             }
-
         }.showLoading()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
