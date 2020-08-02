@@ -1,8 +1,17 @@
 /*
- * Copyright (C) 2018, Umbrella CompanyLimited All rights reserved.
- * Project：StateLayout
- * Author：drake
- * Date：7/14/20 2:23 PM
+ * Copyright (C) 2018 Drake, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 @file:Suppress("unused", "MemberVisibilityCanBePrivate", "NAME_SHADOWING", "RedundantSetter")
@@ -156,6 +165,8 @@ class StateLayout @JvmOverloads constructor(
 
     /**
      * 有网则显示加载中, 无网络直接显示错误
+     * @param tag 传递的tag将被[onLoading]接收
+     * @param refresh 是否调用刷新回调[onRefresh]
      */
     fun showLoading(tag: Any? = null, refresh: Boolean = true) {
         this.refresh = refresh
@@ -177,6 +188,9 @@ class StateLayout @JvmOverloads constructor(
         }
     }
 
+    /**
+     * @param tag 传递的tag将被[onEmpty]接收
+     */
     fun showEmpty(tag: Any? = null) {
         if (emptyLayout == NO_ID) {
             emptyLayout = StateConfig.emptyLayout
@@ -186,6 +200,9 @@ class StateLayout @JvmOverloads constructor(
         }
     }
 
+    /**
+     * @param tag 传递的tag将被[onError]接收
+     */
     fun showError(tag: Any? = null) {
         if (errorLayout == NO_ID) {
             errorLayout = StateConfig.errorLayout

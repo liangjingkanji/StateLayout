@@ -1,0 +1,40 @@
+site_name: StateLayout
+site_author: drake
+site_description: StateLayout document
+copyright: Copyright &copy; 2016 - 2020 Drake
+
+repo_name: StateLayout
+repo_url: https://github.com/liangjingkanji/StateLayout
+
+extra_css:
+  - css/extra.css
+
+docs_dir: 'docs'
+
+theme:
+  name: material
+  custom_dir: docs/material
+
+  font:
+    text: JetBrains Mono
+    code: JetBrains Mono
+  language: zh
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed
+
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - 使用: 'index.md'
+  - 生命周期: 'lifecycle.md'
+  - 传递数据: 'transfer.md'
+  - 点击重试: 'retry.md'
+  - 全局配置: 'global.md'
