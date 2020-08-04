@@ -5,52 +5,6 @@
 
 <br>
 
-```kotlin hl_lines="7 8 9 10 11"
-package com.example.statelayout
-
-import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.concurrent.thread
-
-class MainActivity : AppCompatActivity() {
-
-
-    /**
-     * 创建
-     */
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        state.onRefresh {
-            // 一般在这里进行网络请求
-            thread {
-                Thread.sleep("2000")
-                showContent()
-            }
-        }.showLoading()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_loading -> state.showLoading()
-            R.id.menu_content -> state.showContent()
-            R.id.menu_error -> state.showError(NullPointerException())
-            R.id.menu_empty -> state.showEmpty()
-        }
-        return true
-    }
-}
-```
-
 1. StateLayout继承自FrameLayout
 1. StateLayout不能通过代码包裹ViewPager中的Fragment, 因为其ViewPager的视图容器无法被替换
 <br>
