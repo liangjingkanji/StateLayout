@@ -262,6 +262,11 @@ class StateLayout @JvmOverloads constructor(
                     emptyLayout -> {
                         status = Status.EMPTY
 
+                        if (retryIds == null) retryIds = StateConfig.retryIds
+                        retryIds?.forEach {
+                            view.findViewById<View>(it)?.throttleClick { showLoading() }
+                        }
+
                         if (onEmpty == null) StateConfig.onEmpty?.let { onEmpty = it }
 
                         onEmpty?.invoke(view, tag)
@@ -272,7 +277,6 @@ class StateLayout @JvmOverloads constructor(
                         status = Status.ERROR
 
                         if (retryIds == null) retryIds = StateConfig.retryIds
-
                         retryIds?.forEach {
                             view.findViewById<View>(it)?.throttleClick { showLoading() }
                         }
