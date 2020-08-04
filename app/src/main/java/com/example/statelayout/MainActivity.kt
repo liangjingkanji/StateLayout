@@ -25,13 +25,11 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-    // private lateinit var state: StateLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // state = state()
         state.onRefresh {
             // 一般在这里进行网络请求
             thread {

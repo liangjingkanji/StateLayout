@@ -6,32 +6,33 @@
 
 <p align="center">
 <a href="https://jitpack.io/#liangjingkanji/StateLayout"><img src="https://jitpack.io/v/liangjingkanji/StateLayout.svg"/></a>
+<img src="https://img.shields.io/badge/language-kotlin-orange.svg"/>
 <img src="https://img.shields.io/badge/license-Apache-blue"/>
 <a href="https://jq.qq.com/?_wv=1027&k=vWsXSNBJ"><img src="https://img.shields.io/badge/QQ群-752854893-blue"/></a>
 </p>
 
-
 <p align="center"><a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a></p>
 
+<p align="center"><img src="https://i.imgur.com/YmP9RKB.gif" alt="image-20200802050745439" width="40%" /></p>
 
-
-<p align="center"><img src="https://i.imgur.com/2pry0ft.png" alt="image-20200802050745439" width="40%" /></p>
+<br>
 
 ### 功能
 
-- [x] 布局和代码都可以声明
-- [x] Fragment/Activity/View/ConstraintLayout/RecyclerView都支持
-- [x] 无网络情况下`showLoading`直接显示错误布局, 有网则显示`loadingLayout`
-- [x] 异步线程调用
-- [x] 默认缺省页(全局)
-- [x] 指定缺省页(单例)
+- [x] 布局和代码创建缺省页
+- [x] Fragment/Activity/View/ConstraintLayout/RecyclerView 支持函数包裹
+- [x] 全局/单例缺省页
 - [x] 缺省页生命周期
-- [x] 刷新回调
+- [x] 加载任务回调
 - [x] 传递标签
+- [x] 点击重试
+- [x] 支持异步线程
+- [x] 无网络情况下立即显示错误页面
+- [x] Kotlin特性
 - [x] 配合列表使用自动化显示列表缺省页
 - [x] 配合网络请求自动化显示缺省页
 
-
+<br>
 
 在项目根目录的 build.gradle 添加仓库
 
@@ -44,15 +45,13 @@ allprojects {
 }
 ```
 
-
-
 在 module 的 build.gradle 添加依赖
 
 ```groovy
 implementation 'com.github.liangjingkanji:StateLayout:1.0.12'
 ```
 
-
+<br>
 
 ## License
 
