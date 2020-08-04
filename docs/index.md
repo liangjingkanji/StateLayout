@@ -1,9 +1,55 @@
 
-<img src='https://i.imgur.com/YW7EzWh.gif' width="50%"/>
+<p align="center"><img src="https://i.imgur.com/YW7EzWh.gif" width="50%"/></p>
 
 首先明确的就是StateLayout布局包裹的内容才能控制其显示缺省页, 所以在我们创建缺省页的时候一定要包裹住一个内容作为内容页面
 
 <br>
+
+```kotlin hl_lines="7 8 9 10 11"
+package com.example.statelayout
+
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.thread
+
+class MainActivity : AppCompatActivity() {
+
+
+    /**
+     * 创建
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        state.onRefresh {
+            // 一般在这里进行网络请求
+            thread {
+                Thread.sleep("2000")
+                showContent()
+            }
+        }.showLoading()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_loading -> state.showLoading()
+            R.id.menu_content -> state.showContent()
+            R.id.menu_error -> state.showError(NullPointerException())
+            R.id.menu_empty -> state.showEmpty()
+        }
+        return true
+    }
+}
+```
 
 1. StateLayout继承自FrameLayout
 1. StateLayout不能通过代码包裹ViewPager中的Fragment, 因为其ViewPager的视图容器无法被替换
@@ -55,7 +101,7 @@ state.apply {
 }
 ```
 
-```kotlin tab="布局属性设置" hl_lines="5 6 7"
+```xml tab="布局属性设置" hl_lines="5 6 7"
 <com.drake.statelayout.StateLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

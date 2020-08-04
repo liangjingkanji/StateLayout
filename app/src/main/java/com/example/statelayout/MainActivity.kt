@@ -26,6 +26,9 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
 
 
+    /**
+     * 创建
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

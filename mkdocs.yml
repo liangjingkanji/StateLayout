@@ -15,6 +15,10 @@ theme:
   name: material
   custom_dir: docs/material
 
+  palette:
+    primary: 'teal'
+    accent: 'teal'
+
   font:
     text: JetBrains Mono
     code: JetBrains Mono
@@ -38,3 +42,5 @@ nav:
   - 传递数据: 'transfer.md'
   - 点击重试: 'retry.md'
   - 全局配置: 'global.md'
+#  - 列表缺省页: 'list.md'
+#  - 网络自动缺省页: 'net.md'
