@@ -7,6 +7,26 @@
 
 <br>
 
+```kotlin tab="显示缺省页"
+state.showError(ResponseException(code = 403, msg = "请求参数错误"))
+```
+
+```kotlin tab="单例错误监听处理参数"
+state.onError {
+    if (it is ResponseException) {
+        findViewById<TextView>.text = "错误码: ${it.code}, 错误信息: ${it.msg}"
+    }
+}
+```
+
+```kotlin tab="全局错误监听处理参数"
+StateConfig.onError {
+    if (it is ResponseException) {
+        findViewById<TextView>.text = "错误码: ${it.code}, 错误信息: ${it.msg}"
+    }
+}
+```
+
 显示缺省页函数
 ```kotlin
 fun showLoading(tag: Any? = null, refresh: Boolean = true)
@@ -25,7 +45,8 @@ fun showError(tag: Any? = null)
 fun showContent()
 // 显示内容页面
 ```
-`tag`即传递的参数, 在监听事件中会被收到(即`Any`), 默认为null
+`tag`即传递的参数, 在监听事件中会被收到(即`Any`).
+`show*`函数显示缺省页时传入参数, `on*`函数接收参数, 然后在`on*`回调中处理你要的逻辑
 
 监听事件函数
 ```kotlin

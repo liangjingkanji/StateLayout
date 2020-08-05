@@ -39,6 +39,6 @@ markdown_extensions:
 nav:
   - 使用: 'index.md'
   - 生命周期: 'lifecycle.md'
+  - 全局配置: 'global.md'
   - 传递数据: 'transfer.md'
   - 点击重试: 'retry.md'
-  - 全局配置: 'global.md'
