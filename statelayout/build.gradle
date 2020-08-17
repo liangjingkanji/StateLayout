@@ -18,12 +18,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.liangjingkanji'
+apply plugin: 'org.jetbrains.dokka'
+group = 'com.github.liangjingkanji'
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
-
 
     defaultConfig {
         minSdkVersion 19
@@ -32,7 +32,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -42,6 +41,17 @@ android {
         }
     }
 
+    dokka {
+        outputFormat = 'gfm'
+        outputDirectory = "$rootDir/docs/api"
+        configuration {
+            perPackageOption {
+                prefix = "android"
+                suppress = true // 将禁止该包被引用文档
+                noAndroidSdkLink = true
+            }
+        }
+    }
 }
 
 dependencies {

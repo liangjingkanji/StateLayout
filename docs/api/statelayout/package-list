@@ -1,0 +1,6 @@
+$dokka.format:gfm
+$dokka.linkExtension:md
+$dokka.location:com.drake.statelayout$state(android.app.Activity)com.drake.statelayout/android.app.-activity/state.md
+$dokka.location:com.drake.statelayout$state(android.view.View)com.drake.statelayout/android.view.-view/state.md
+$dokka.location:com.drake.statelayout$state(androidx.fragment.app.Fragment)com.drake.statelayout/androidx.fragment.app.-fragment/state.md
+com.drake.statelayout

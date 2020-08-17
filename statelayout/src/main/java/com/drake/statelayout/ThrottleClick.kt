@@ -19,6 +19,9 @@ package com.drake.statelayout
 import android.view.View
 import java.util.concurrent.TimeUnit
 
+/**
+ * 防抖动
+ */
 internal fun View.throttleClick(
     interval: Long = 500,
     unit: TimeUnit = TimeUnit.MILLISECONDS,

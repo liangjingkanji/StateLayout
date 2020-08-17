@@ -28,11 +28,17 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 
+/**
+ * 创建一个缺省页来包裹Activity
+ */
 fun Activity.state(): StateLayout {
     val view = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
     return view.state()
 }
 
+/**
+ * 创建一个缺省页来包裹Fragment
+ */
 fun Fragment.state(): StateLayout {
     val stateLayout = view!!.state()
 
@@ -49,6 +55,9 @@ fun Fragment.state(): StateLayout {
     return stateLayout
 }
 
+/**
+ * 创建一个缺省页来包裹视图
+ */
 fun View.state(): StateLayout {
     val parent = parent as ViewGroup
     if (parent is ViewPager || parent is RecyclerView) {

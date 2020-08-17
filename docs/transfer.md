@@ -7,25 +7,28 @@
 
 <br>
 
-```kotlin tab="显示缺省页"
-state.showError(ResponseException(code = 403, msg = "请求参数错误"))
-```
+=== "显示缺省页"
+    ```kotlin
+    state.showError(ResponseException(code = 403, msg = "请求参数错误"))
+    ```
 
-```kotlin tab="单例错误监听处理参数"
-state.onError {
-    if (it is ResponseException) {
-        findViewById<TextView>.text = "错误码: ${it.code}, 错误信息: ${it.msg}"
+=== "单例错误监听处理参数"
+    ```kotlin
+    state.onError {
+        if (it is ResponseException) {
+            findViewById<TextView>.text = "错误码: ${it.code}, 错误信息: ${it.msg}"
+        }
     }
-}
-```
+    ```
 
-```kotlin tab="全局错误监听处理参数"
-StateConfig.onError {
-    if (it is ResponseException) {
-        findViewById<TextView>.text = "错误码: ${it.code}, 错误信息: ${it.msg}"
+=== "全局错误监听处理参数"
+    ```kotlin
+    StateConfig.onError {
+        if (it is ResponseException) {
+            findViewById<TextView>.text = "错误码: ${it.code}, 错误信息: ${it.msg}"
+        }
     }
-}
-```
+    ```
 
 显示缺省页函数
 ```kotlin

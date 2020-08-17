@@ -1,12 +1,14 @@
 一般错误页面都会存在一个点击重试的按钮, 本库也简化了该操作
 
-```kotlin tab="单例设置点击重试Id"
-state.setRetryIds(R.id.msg) // 会触发[onRefresh]
-```
+=== "单例设置点击重试Id"
+    ```kotlin
+    state.setRetryIds(R.id.msg) // 会触发[onRefresh]
+    ```
 
-```kotlin tab="全局设置点击重试Id"
-StateConfig.setRetryIds(R.id.msg) // 会触发[onRefresh]
-```
+=== "全局设置点击重试Id"
+    ```kotlin
+    StateConfig.setRetryIds(R.id.msg) // 会触发[onRefresh]
+    ```
 
 函数
 ```kotlin

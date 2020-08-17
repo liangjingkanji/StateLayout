@@ -29,15 +29,20 @@ import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.collection.ArrayMap
-import com.drake.statelayout.StateConfig.errorLayout
 
 /**
  * 简单配置缺省页
  *
  * 全局配置
  * 单例配置
- * 支持Java或者XML实现
+ * 支持代码或者布局创建
  * 无网络情况下showLoading显示错误布局, 有网则显示加载中布局
+ *
+ * @property emptyLayout 空页的layoutRes
+ * @property errorLayout 错误页的layoutRes
+ * @property loadingLayout 加载页的layoutRes
+ * @property status 当前缺省页状态[Status]
+ * @property loaded 当前缺省页是否加载成功过, 即是否执行过[showContent]
  */
 class StateLayout @JvmOverloads constructor(
     context: Context,
@@ -120,7 +125,7 @@ class StateLayout @JvmOverloads constructor(
     // <editor-fold desc="生命周期">
 
     /**
-     * 当空缺省页显示时
+     * 当空缺省页显示时回调
      * @see showEmpty
      * @see StateConfig.onEmpty
      */
@@ -130,7 +135,7 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
-     * 当加载中缺省页显示时
+     * 当加载中缺省页显示时回调
      * @see showLoading
      * @see StateConfig.onLoading
      */
@@ -140,7 +145,7 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
-     * 当错误缺省页显示时
+     * 当错误缺省页显示时回调
      * @see showError
      * @see StateConfig.onError
      */
@@ -164,7 +169,7 @@ class StateLayout @JvmOverloads constructor(
 
 
     /**
-     * 有网则显示加载中, 无网络直接显示错误
+     * 有网则显示加载中, 无网络直接显示错误, 会触发[onLoading]的函数参数
      * @param tag 传递的tag将被[onLoading]接收
      * @param refresh 是否调用刷新回调[onRefresh]
      */
@@ -189,6 +194,7 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
+     * 显示空页, 会触发[onEmpty]的函数参数
      * @param tag 传递的tag将被[onEmpty]接收
      */
     fun showEmpty(tag: Any? = null) {
@@ -201,6 +207,7 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
+     * 显示错误页, 会触发[onError]的函数参数
      * @param tag 传递的tag将被[onError]接收
      */
     fun showError(tag: Any? = null) {
@@ -212,6 +219,9 @@ class StateLayout @JvmOverloads constructor(
         }
     }
 
+    /**
+     * 显示内容布局, 表示成功缺省页
+     */
     fun showContent() {
         if (trigger && stateChanged) return
         loaded = true
@@ -221,8 +231,8 @@ class StateLayout @JvmOverloads constructor(
     // </editor-fold>
 
     /**
-     * 设置[errorLayout]中的视图点击后会执行[StateLayout.showLoading]
-     * 并且500ms内防重复点击
+     * 错误页/空页中的布局控件包含指定IdRes的会设置点击事件, 该点击事件会触发[StateLayout.showLoading]
+     * 点击事件500ms内防抖动
      */
     fun setRetryIds(@IdRes vararg ids: Int): StateLayout {
         retryIds = ids.toList()
@@ -230,7 +240,7 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
-     * 用于网络请求的触发器
+     * 一般情况下开发者无需关心, 这属于配合其他框架预览函数
      */
     fun trigger(): Boolean {
         trigger = !trigger

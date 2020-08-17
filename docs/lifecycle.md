@@ -13,51 +13,55 @@ fun onRefresh(block: StateLayout.(loading: View) -> Unit): StateLayout
 
 监听加载
 
-```kotlin tab="示例"
-state.onRefresh {
-    // 每次showLoading都会执行该回调
-}
-state.showLoading()
-```
+=== "示例"
+    ```kotlin
+    state.onRefresh {
+        // 每次showLoading都会执行该回调
+    }
+    state.showLoading()
+    ```
 
-```kotlin tab="链式调用"
+=== "链式调用"
+    ```kotlin
 
-state.onRefresh {
-    // 每次showLoading都会执行该回调
-}.showLoading()
-```
+    state.onRefresh {
+        // 每次showLoading都会执行该回调
+    }.showLoading()
+    ```
 
 监听缺省页显示
 
-```kotlin tab="示例"
-state.onEmpty {
+=== "示例"
+    ```kotlin
+    state.onEmpty {
 
-}
+    }
 
-state.onError {
+    state.onError {
 
-}
+    }
 
-state.onLoading {
+    state.onLoading {
 
-}
+    }
 
-state.onRefresh {
+    state.onRefresh {
 
-}
-```
+    }
+    ```
 
-```kotlin tab="链式调用"
-state.onEmpty {
+=== "链式调用"
+    ```kotlin
+    state.onEmpty {
 
-}.onError {
+    }.onError {
 
-}.onLoading {
+    }.onLoading {
 
-}.onRefresh {
+    }.onRefresh {
 
-}
-```
+    }
+    ```
 
 这里可以看到onRefresh和onLoading触发的条件一样, 但是他们的函数参数接收者不一样, 他们所代表的的作用也不同.
 
