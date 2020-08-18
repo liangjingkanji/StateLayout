@@ -21,5 +21,5 @@ fun setRetryIds(@IdRes vararg ids: Int): StateLayout
 
 <br>
 
-!!! tip
+!!! note
     空页面也同样支持点击重试

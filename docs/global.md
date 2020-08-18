@@ -24,5 +24,5 @@ StateConfig.apply {
 }
 ```
 
-!!! tip
+!!! note
     单例可以覆盖全局的配置, 单例即当前页面的`StateLayout`

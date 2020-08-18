@@ -1,6 +1,6 @@
 :root > * {
     --md-code-fg-color:                #A9B7C6;
-    --md-code-bg-color:                #202020;
+    --md-code-bg-color:                #2b2b2b;
     --md-code-hl-color:                #214283;
     --md-code-hl-number-color:         #82AAFF;
     --md-code-hl-special-color:        #A9B7C6;
@@ -14,7 +14,9 @@
     --md-code-hl-comment-color:        #787878;
     --md-code-hl-generic-color:        #A9B7C6;
     --md-code-hl-variable-color:       #A9B7C6;
+
     --highlighting-color:  #d63200;
+    --highlighting-color-opacity:  #d6320022;
 }
 
 [data-md-color-scheme="drake"] {
@@ -29,6 +31,17 @@
 .md-typeset, .md-nav__item {
     color: #304455 !important;
     font-size: 12px !important;
+}
+
+.md-typeset .admonition, .md-typeset details {
+    border-left: .2rem solid var(--md-primary-fg-color);
+    border-color: var(--md-primary-fg-color) !important;
+}
+.md-typeset .note>.admonition-title::before, .md-typeset .note>summary::before {
+    background-color: var(--md-primary-fg-color);
+}
+.md-typeset .note>.admonition-title, .md-typeset .note>summary {
+    background-color: var(--highlighting-color-opacity);
 }
 
 body {
