@@ -18,9 +18,7 @@ theme:
   palette:
     scheme: 'drake'
 
-  font:
-    text: IBM Plex Mono
-    code: IBM Plex Mono
+  font: false
 
   language: zh
 

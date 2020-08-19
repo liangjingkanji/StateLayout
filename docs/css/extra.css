@@ -17,6 +17,7 @@
 
     --highlighting-color:  #d63200;
     --highlighting-color-opacity:  #d6320022;
+    --md-admonition-fg-color: #333333;
 }
 
 [data-md-color-scheme="drake"] {
@@ -28,9 +29,46 @@
     --md-accent-fg-color--dark:  #d63200;
 }
 
+@font-face {
+    font-family: "Plode";
+    src: local("Plode") format('truetype'),
+         url('https://raw.githubusercontent.com/liangjingkanji/Plode-Font/blob/master/dist/Plode.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Hiragino Sans GB";
+    src: local("Hiragino Sans GB") format('truetype'),
+         url('https://raw.githubusercontent.com/liangjingkanji/Plode-Font/blob/master/dist/Hiragino%20Sans%20GB.ttc') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*常规字体*/
+body, input {
+    font-family: "Plode", "Hiragino Sans GB", -apple-system, Helvetica, Arial, sans-serif;
+}
+
+/*代码字体*/
+pre, code, kbd {
+    font-family: "Plode", "Hiragino Sans GB", SFMono-Regular, Consolas, Menlo, monospace;
+}
+
+* {
+    -webkit-font-feature-settings: "liga" on, "calt" on;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeLegibility;
+}
+
 .md-typeset, .md-nav__item {
-    color: #304455 !important;
+    color: var(--md-admonition-fg-color) !important;
     font-size: 12px !important;
+}
+.md-typeset code {
+    font-size: inherit;
+}
+.md-typeset .admonition, .md-typeset details {
+    font-size: inherit;
 }
 
 .md-typeset .admonition, .md-typeset details {
@@ -44,14 +82,15 @@
     background-color: var(--highlighting-color-opacity);
 }
 
-body {
-    color: #304455;
-    -webkit-font-smoothing: auto !important;
-}
-
 p code, article > code, li > code, td > code, th > code, a > code {
     background-color: rgb(0,0,0,0) !important;
     color: var(--highlighting-color) !important;
+    margin: 0 2px;
+}
+
+.md-content a {
+    color: var(--highlighting-color) !important;
+    text-decoration: underline;
     margin: 0 2px;
 }
 
@@ -71,12 +110,6 @@ h1, h2, h3, h4, h5, h6, .md-header-nav__title {
 img {
     border-radius: 2px;
     margin: 4px 0;
-}
-
-p a, article > code, td > a, th > a {
-    color: var(--highlighting-color) !important;
-    text-decoration: underline;
-    margin: 0 2px;
 }
 
 .md-typeset .tabbed-set>input:checked+label {
