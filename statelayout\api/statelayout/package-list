@@ -1,6 +1,0 @@
-$dokka.format:html
-$dokka.linkExtension:html
-$dokka.location:com.drake.statelayout$state(android.app.Activity)com.drake.statelayout/android.app.-activity/state.html
-$dokka.location:com.drake.statelayout$state(android.view.View)com.drake.statelayout/android.view.-view/state.html
-$dokka.location:com.drake.statelayout$state(androidx.fragment.app.Fragment)com.drake.statelayout/androidx.fragment.app.-fragment/state.html
-com.drake.statelayout

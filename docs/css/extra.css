@@ -44,12 +44,10 @@
     font-style: normal;
 }
 
-/*常规字体*/
 body, input {
     font-family: "Plode", "Hiragino Sans GB", -apple-system, Helvetica, Arial, sans-serif;
 }
 
-/*代码字体*/
 pre, code, kbd {
     font-family: "Plode", "Hiragino Sans GB", SFMono-Regular, Consolas, Menlo, monospace;
 }
