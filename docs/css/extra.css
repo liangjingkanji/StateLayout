@@ -31,7 +31,7 @@
 
 @font-face {
     font-family: "Plode";
-    src: local("Plode") format('truetype'),
+    src: local("Plode") format('opentype'),
          url('https://raw.githubusercontent.com/liangjingkanji/Plode-Font/blob/master/dist/Plode.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
@@ -39,7 +39,7 @@
 @font-face {
     font-family: "Hiragino Sans GB";
     src: local("Hiragino Sans GB") format('truetype'),
-         url('https://raw.githubusercontent.com/liangjingkanji/Plode-Font/blob/master/dist/Hiragino%20Sans%20GB.ttc') format('opentype');
+         url('https://raw.githubusercontent.com/liangjingkanji/Plode-Font/blob/master/dist/Hiragino%20Sans%20GB.ttc') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
