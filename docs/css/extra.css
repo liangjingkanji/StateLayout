@@ -30,26 +30,19 @@
 }
 
 @font-face {
-    font-family: "Plode";
-    src: local("Plode") format('opentype'),
-         url('https://raw.githubusercontent.com/liangjingkanji/Plode-Font/blob/master/dist/Plode.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: "Hiragino Sans GB";
-    src: local("Hiragino Sans GB") format('truetype'),
-         url('https://raw.githubusercontent.com/liangjingkanji/Plode-Font/blob/master/dist/Hiragino%20Sans%20GB.ttc') format('truetype');
+    font-family: "Sarasa Mono SC";
+    src: local("Sarasa Mono SC") format('truetype'),
+         url('https://gitlab.com/liangjingkanji/fonts/-/raw/master/sarasa-mono/sarasa-mono-sc-regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 body, input {
-    font-family: "Plode", "Hiragino Sans GB", -apple-system, Helvetica, Arial, sans-serif;
+    font-family: "Sarasa Mono SC", -apple-system, Helvetica, Arial, sans-serif;
 }
 
 pre, code, kbd {
-    font-family: "Plode", "Hiragino Sans GB", SFMono-Regular, Consolas, Menlo, monospace;
+    font-family: "Sarasa Mono SC", SFMono-Regular, Consolas, Menlo, monospace;
 }
 
 * {
