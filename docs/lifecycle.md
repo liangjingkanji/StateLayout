@@ -1,4 +1,4 @@
-我们可以通过监听缺省页显示的生命周期来获取其对应的视图对象
+我们可以通过监听缺省页显示的生命周期来获取其对应的视图对象(View), 在其回调中可以拿到缺省页的任何控件
 
 ```kotlin
 fun onEmpty(block: View.(Any?) -> Unit): StateLayout
@@ -17,6 +17,7 @@ fun onRefresh(block: StateLayout.(loading: View) -> Unit): StateLayout
     ```kotlin
     state.onRefresh {
         // 每次showLoading都会执行该回调
+        find
     }
     state.showLoading()
     ```
@@ -42,7 +43,7 @@ fun onRefresh(block: StateLayout.(loading: View) -> Unit): StateLayout
     }
 
     state.onLoading {
-
+        findViewById<TextView>(R.id.msg).text = "空布局信息"
     }
 
     state.onRefresh {
