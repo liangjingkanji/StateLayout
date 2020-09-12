@@ -4,14 +4,14 @@
 
 <p align="center"><strong>整个应用的缺省页</strong></p><br>
 
+<p align="center"><a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a></p>
+
 <p align="center">
 <a href="https://jitpack.io/#liangjingkanji/StateLayout"><img src="https://jitpack.io/v/liangjingkanji/StateLayout.svg"/></a>
 <img src="https://img.shields.io/badge/language-kotlin-orange.svg"/>
 <img src="https://img.shields.io/badge/license-Apache-blue"/>
 <a href="https://jq.qq.com/?_wv=1027&k=vWsXSNBJ"><img src="https://img.shields.io/badge/QQ群-752854893-blue"/></a>
 </p>
-
-<p align="center"><a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a></p>
 
 <p align="center"><img src="https://i.imgur.com/YmP9RKB.gif" alt="image-20200802050745439" width="40%" /></p>
 

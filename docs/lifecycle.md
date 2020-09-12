@@ -1,15 +1,11 @@
 我们可以通过监听缺省页显示的生命周期来获取其对应的视图对象(View), 在其回调中可以拿到缺省页的任何控件
 
-```kotlin
-fun onEmpty(block: View.(Any?) -> Unit): StateLayout
-// showEmpty() 时回调
-fun onError(block: View.(Any?) -> Unit): StateLayout
-// showError() 时回调
-fun onLoading(block: View.(Any?) -> Unit): StateLayout
-// showLoading() 时回调
-fun onRefresh(block: StateLayout.(loading: View) -> Unit): StateLayout
-// showLoading() 时回调
-```
+| 函数 | 描述 |
+|-|-|
+| [onEmpty](api/statelayout/com.drake.statelayout/-state-layout/on-empty.md) | [showEmpty](api/statelayout/com.drake.statelayout/-state-layout/show-empty.md) 时回调 |
+| [onError](api/statelayout/com.drake.statelayout/-state-layout/on-error.md) | [showError](api/statelayout/com.drake.statelayout/-state-layout/show-error.md) 时回调 |
+| [onLoading](api/statelayout/com.drake.statelayout/-state-layout/on-loading.md.md) | [showLoading](api/statelayout/com.drake.statelayout/-state-layout/show-loading.md) 时回调 |
+| [onRefresh](api/statelayout/com.drake.statelayout/-state-layout/on-loading.md.md) | [showLoading](api/statelayout/com.drake.statelayout/-state-layout/show-loading.md) 时回调, 和`onLoading`不同的是该函数的`this`是StateLayout, 一般在其中执行加载网络或异步任务的逻辑, 而不是加载视图|
 
 监听加载
 
