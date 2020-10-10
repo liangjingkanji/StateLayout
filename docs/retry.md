@@ -21,14 +21,7 @@ fun setRetryIds(@IdRes vararg ids: Int): StateLayout
 通过你设置的Id会自动在错误页面和空布局页面`findViewById`查找到对应Id的控件设置点击事件, 点击事件执行`showLoading`.
 会自动触发`onRefresh/onLoading`回调
 
-
-> 是大神大大
-
-<br>
-
-!!! note
-    空页面也同样支持点击重试 <br>
-
+> 空页面也同样支持点击重试 <br>
 
 ### 自定义重试
 
