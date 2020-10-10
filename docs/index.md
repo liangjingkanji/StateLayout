@@ -1,5 +1,5 @@
 
-<p align="center"><img src="https://i.imgur.com/YW7EzWh.gif" width="40%"/></p>
+<p align="center"><img src="https://i.imgur.com/YW7EzWh.gif" width="30%"/></p>
 
 首先明确的就是StateLayout布局包裹的内容才能控制其显示缺省页, 所以在我们创建缺省页的时候一定要包裹住一个内容作为内容页面
 
@@ -88,3 +88,4 @@ state.showEmpty()
 state.showError()
 state.showContent()
 ```
+这些`show*()`函数都有一个Any参数, 可以传递任何对象到[生命周期](docs/lifecycle.md)中, 进行定制化展示不同的缺省页

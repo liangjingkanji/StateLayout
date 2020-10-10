@@ -1,11 +1,19 @@
-我们可以通过监听缺省页显示的生命周期来获取其对应的视图对象(View), 在其回调中可以拿到缺省页的任何控件
+我们可以通过监听缺省页显示的生命周期来获取其对应的视图对象(View), 在其回调中可以拿到缺省页的任何控件(类似于Activity的`onCreate`)
 
 | 函数 | 描述 |
 |-|-|
 | [onEmpty](api/statelayout/com.drake.statelayout/-state-layout/on-empty.md) | [showEmpty](api/statelayout/com.drake.statelayout/-state-layout/show-empty.md) 时回调 |
 | [onError](api/statelayout/com.drake.statelayout/-state-layout/on-error.md) | [showError](api/statelayout/com.drake.statelayout/-state-layout/show-error.md) 时回调 |
 | [onLoading](api/statelayout/com.drake.statelayout/-state-layout/on-loading.md.md) | [showLoading](api/statelayout/com.drake.statelayout/-state-layout/show-loading.md) 时回调 |
-| [onRefresh](api/statelayout/com.drake.statelayout/-state-layout/on-loading.md.md) | [showLoading](api/statelayout/com.drake.statelayout/-state-layout/show-loading.md) 时回调, 和`onLoading`不同的是该函数的`this`是StateLayout, 一般在其中执行加载网络或异步任务的逻辑, 而不是加载视图|
+| [onRefresh](api/statelayout/com.drake.statelayout/-state-layout/on-loading.md.md) | [showLoading](api/statelayout/com.drake.statelayout/-state-layout/show-loading.md) 时回调, 和`onLoading`不同的是该函数的`this`是StateLayout, <br>一般在其中执行加载网络或异步任务的逻辑, 而不是加载视图|
+
+每个StateLayout实例都可以设置单独的回调监听, 同时StateConfig可以设置全局的回调监听
+
+<br>
+
+!!! note
+    你对缺省页有任何自定义的需求, 点击事件? 开始播放动画? 通过参数展示不同的错误页或者空页面? 都可以在这里判断! <br>
+    `show*()`函数可以通过其参数Any传递任何对象到`on*()`生命周期回调中
 
 监听加载
 
