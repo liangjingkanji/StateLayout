@@ -55,10 +55,10 @@ class StateLayout @JvmOverloads constructor(
     private var retryIds: List<Int>? = null
     private var refresh = true
 
-    private var onEmpty: (View.(Any?) -> Unit)? = null
-    private var onError: (View.(Any?) -> Unit)? = null
-    private var onLoading: (View.(Any?) -> Unit)? = null
-    private var onRefresh: (StateLayout.(View) -> Unit)? = null
+    private var onEmpty: (View.(tag: Any?) -> Unit)? = null
+    private var onError: (View.(tag: Any?) -> Unit)? = null
+    private var onLoading: (View.(tag: Any?) -> Unit)? = null
+    private var onRefresh: (StateLayout.(tag: Any?) -> Unit)? = null
 
     private var stateChanged = false
     private var trigger = false
@@ -129,7 +129,7 @@ class StateLayout @JvmOverloads constructor(
      * @see showEmpty
      * @see StateConfig.onEmpty
      */
-    fun onEmpty(block: View.(Any?) -> Unit): StateLayout {
+    fun onEmpty(block: View.(tag: Any?) -> Unit): StateLayout {
         onEmpty = block
         return this
     }
@@ -139,7 +139,7 @@ class StateLayout @JvmOverloads constructor(
      * @see showLoading
      * @see StateConfig.onLoading
      */
-    fun onLoading(block: View.(Any?) -> Unit): StateLayout {
+    fun onLoading(block: View.(tag: Any?) -> Unit): StateLayout {
         onLoading = block
         return this
     }
@@ -149,7 +149,7 @@ class StateLayout @JvmOverloads constructor(
      * @see showError
      * @see StateConfig.onError
      */
-    fun onError(block: View.(Any?) -> Unit): StateLayout {
+    fun onError(block: View.(tag: Any?) -> Unit): StateLayout {
         onError = block
         return this
     }
@@ -157,7 +157,7 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 当[showLoading]时会回调该函数参数, 一般将网络请求等异步操作放入其中
      */
-    fun onRefresh(block: StateLayout.(loading: View) -> Unit): StateLayout {
+    fun onRefresh(block: StateLayout.(tag: Any?) -> Unit): StateLayout {
         onRefresh = block
         return this
     }
@@ -170,10 +170,11 @@ class StateLayout @JvmOverloads constructor(
 
     /**
      * 有网则显示加载中, 无网络直接显示错误, 会触发[onLoading]的函数参数
-     * @param tag 传递的tag将被[onLoading]接收
-     * @param refresh 是否调用刷新回调[onRefresh]
+     * @param tag 传递参数将被[onLoading]接收
+     * @param silent 仅回调[onRefresh], 不回调[onLoading]
+     * @param refresh 是否回调[onRefresh]
      */
-    fun showLoading(tag: Any? = null, refresh: Boolean = true) {
+    fun showLoading(tag: Any? = null, silent: Boolean = false, refresh: Boolean = true) {
         this.refresh = refresh
 
         if (loadingLayout == NO_ID) {
@@ -181,10 +182,13 @@ class StateLayout @JvmOverloads constructor(
         }
 
         if (status == Status.LOADING) {
-            if (onLoading == null) {
-                StateConfig.onLoading?.let { onLoading = it }
-            }
+            if (onLoading == null) StateConfig.onLoading?.let { onLoading = it }
             onLoading?.invoke(getView(loadingLayout), tag)
+            return
+        }
+
+        if (silent && refresh) {
+            onRefresh?.invoke(this, tag)
             return
         }
 
@@ -253,60 +257,47 @@ class StateLayout @JvmOverloads constructor(
      * 显示视图
      */
     private fun show(layoutId: Int, tag: Any? = null) {
-
         if (trigger) {
             stateChanged = true
         }
-
         runMain {
-
-            for (view in contentViews.values) view.visibility = View.GONE
-
             try {
                 val view = getView(layoutId)
+                for (value in contentViews.values) {
+                    if (view == value) continue
+                    value.visibility = View.GONE
+                }
                 view.visibility = View.VISIBLE
-
                 when (layoutId) {
 
                     // 空
                     emptyLayout -> {
                         status = Status.EMPTY
-
                         if (retryIds == null) retryIds = StateConfig.retryIds
                         retryIds?.forEach {
                             view.findViewById<View>(it)?.throttleClick { showLoading() }
                         }
-
                         if (onEmpty == null) StateConfig.onEmpty?.let { onEmpty = it }
-
                         onEmpty?.invoke(view, tag)
                     }
 
                     // 错误
                     errorLayout -> {
                         status = Status.ERROR
-
                         if (retryIds == null) retryIds = StateConfig.retryIds
                         retryIds?.forEach {
                             view.findViewById<View>(it)?.throttleClick { showLoading() }
                         }
-
                         if (onError == null) StateConfig.onError?.let { onError = it }
-
                         onError?.invoke(view, tag)
                     }
 
                     // 加载中
                     loadingLayout -> {
                         status = Status.LOADING
-
-                        if (onLoading == null) {
-                            StateConfig.onLoading?.let { onLoading = it }
-                        }
-
+                        if (onLoading == null) StateConfig.onLoading?.let { onLoading = it }
                         onLoading?.invoke(view, tag)
-
-                        if (refresh) onRefresh?.invoke(this, view)
+                        if (refresh) onRefresh?.invoke(this, tag)
                     }
 
                     // 内容
@@ -329,8 +320,8 @@ class StateLayout @JvmOverloads constructor(
 
     @Throws(NullPointerException::class)
     private fun getView(@LayoutRes layoutId: Int): View {
-        if (contentViews.containsKey(layoutId)) {
-            return contentViews[layoutId]!!
+        contentViews[layoutId]?.apply {
+            return this
         }
         val view = LayoutInflater.from(context).inflate(layoutId, this, false)
         addView(view)

@@ -2,7 +2,7 @@
 
 # onLoading
 
-`fun onLoading(block: View.(`[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`?) -> `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)`): `[`StateLayout`](index.md)
+`fun onLoading(block: View.(tag: `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`?) -> `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)`): `[`StateLayout`](index.md)
 
 当加载中缺省页显示时回调
 
