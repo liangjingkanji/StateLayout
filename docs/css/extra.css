@@ -36,26 +36,24 @@
 
 /*字体渲染*/
 @font-face{
-    font-family: 'Plex Mono';
-    src: url('https://gitlab.com/liangjingkanji/fonts/-/raw/master/fonts/output/PlexMono.otf') format('embedded-opentype'),
+    font-family: 'JetBrains Mono';
+    src: local('JetBrains Mono'),
+         url('https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2'),
+         url('https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/ttf/JetBrainsMono-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-}
-body, input {
-    font-family: "Plex Mono", -apple-system, Helvetica, Arial, sans-serif;
-}
-pre, code, kbd {
-    font-family: "Plex Mono", SFMono-Regular, Consolas, Menlo, monospace;
 }
 * {
     -webkit-font-feature-settings: "liga" on, "calt" on;
     -webkit-font-smoothing: subpixel-antialiased;
     text-rendering: optimizeLegibility;
+    font-family: 'JetBrains Mono' !important;
+    text-shadow: #33333333 0px 0px 1px !important;
 }
 
 /*布局*/
 .md-grid {
-    max-width: 150em !important;
+    max-width: 120em !important;
 }
 
 /*表格*/
@@ -75,6 +73,7 @@ table tr:nth-child(2n), thead {
     text-align: left;
     display: table;
     box-shadow:none;
+    font-size: 12px;
 }
 .md-typeset table:not([class]) th {
     border: 1px solid #dfe2e5;
@@ -117,7 +116,7 @@ table tr:nth-child(2n), thead {
     font-size: 12px;
 }
 .md-typeset pre {
-    line-height: 1.4;
+    line-height: 1.6;
 }
 
 /*标签*/
@@ -125,6 +124,7 @@ table tr:nth-child(2n), thead {
     border-bottom: 2px solid transparent;
     color: var(--md-typeset-color);
     line-height: 1.3;
+    font-size: 12px;
     margin-bottom: .8em;
     font-weight:normal;
 }
@@ -164,6 +164,12 @@ div .md-source__fact {
 .md-typeset pre>code {
     padding: 0.8em 0.8em;
 }
+code span::selection {
+    background: #214283;
+}
+.highlight code::selection {
+    background: #214283;
+}
 
 /*代码片段*/
 p code, article > code, li > code, td > code, th > code, a > code {
@@ -188,9 +194,51 @@ img {
 .md-typeset .md-content__button {
     color: var(--md-default-fg-color--lighter) !important;
 }
+.md-icon svg {
+    width: 14px;
+}
 
 /*标题*/
 h1, h2, h3, h4, h5, h6, .md-header-nav__title {
     font-weight: bold !important;
     color: #273849;
+}
+.md-typeset h1 {
+    text-align: center;
+    font-size: 1.45em;
+    color:#273849;
+}
+.md-typeset h2 {
+    display: inline-block;
+    font-size: 1.45em;
+}
+h2:after {
+    display: block;
+    content: '';
+    height: 2px;
+    margin-top: 4px;
+    background-color:#273849;
+    border-radius: 2px;
+    margin-right: 1.1em;
+}
+
+/*清单*/
+.md-typeset [type=checkbox]:checked+.task-list-indicator:before {
+    background-color: #43A047;
+}
+.md-typeset .task-list-indicator:before {
+    background-color: #c7c7c7;
+}
+.md-typeset .task-list-control {
+    margin-right: 8px;
+}
+
+/*复制图标*/
+.md-clipboard:after {
+    background-color: #4d4d4d;
+}
+
+/*头部*/
+.md-ellipsis {
+    font-weight: bolder;
 }
