@@ -34,6 +34,8 @@
 
 <br>
 
+## 安装
+
 在项目根目录的 build.gradle 添加仓库
 
 ```groovy
