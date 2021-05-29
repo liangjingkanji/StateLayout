@@ -23,8 +23,6 @@ group = 'com.github.liangjingkanji'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 30
@@ -41,16 +39,10 @@ android {
         }
     }
 
-    dokka {
-        outputFormat = 'gfm'
-        outputDirectory = "$rootDir/docs/api"
-        configuration {
-            perPackageOption {
-                prefix = "android"
-                suppress = true // 将禁止该包被引用文档
-                noAndroidSdkLink = true
-            }
-        }
+    dokkaHtml {
+        outputDirectory.set(file("$rootDir/docs/api"))
+        suppressInheritedMembers.set(true)
+        moduleName.set("StateLayout")
     }
 }
 
