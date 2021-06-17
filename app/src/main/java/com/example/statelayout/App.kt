@@ -28,7 +28,7 @@ class App : Application() {
             errorLayout = R.layout.layout_error
             loadingLayout = R.layout.layout_loading
 
-            setRetryIds(R.id.msg)
+            setRetryIds(R.id.msg, R.id.iv)
         }
     }
 }

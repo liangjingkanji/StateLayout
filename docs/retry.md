@@ -2,13 +2,15 @@
 
 ### 设置重试Id
 
+添加重试Ids要求你设置了加载中布局, 因为重试本质上是自动调用`showLoading`函数, 该函数要求`loadingLayout`有值才会执行(全局或者单例有一即可).
+
 === "单例设置点击重试Id"
-    ```kotlin
+    ```kotlin 
     state.setRetryIds(R.id.msg) // 会触发[onRefresh]
     ```
 
 === "全局设置点击重试Id"
-    ```kotlin
+    ```kotlin 
     StateConfig.setRetryIds(R.id.msg) // 会触发[onRefresh]
     ```
 
