@@ -1,0 +1,487 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="StateLayout document">
+      
+      
+      
+        <meta name="author" content="drake">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
+    
+    
+      
+        <title>传递数据 - StateLayout</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.f1a3b89f.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+    
+    
+    
+      <link rel="stylesheet" href="css/extra.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="drake" data-md-color-primary="white" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="StateLayout" class="md-header__button md-logo" aria-label="StateLayout" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            StateLayout
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              传递数据
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/liangjingkanji/StateLayout/" title="前往 GitHub 仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="StateLayout" class="md-nav__button md-logo" aria-label="StateLayout" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    StateLayout
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/liangjingkanji/StateLayout/" title="前往 GitHub 仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        使用
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lifecycle.html" class="md-nav__link">
+        生命周期
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="global.html" class="md-nav__link">
+        全局配置
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="transfer.html" class="md-nav__link md-nav__link--active">
+        传递数据
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="retry.html" class="md-nav__link">
+        点击重试
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="extension.html" class="md-nav__link">
+        配合其他框架
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/index.html" class="md-nav__link">
+        1.x文档
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/liangjingkanji/StateLayout/edit/master/docs/transfer.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>传递数据</h1>
+                
+                <p>某些情况下我们不同时候显示的缺省页存在微小差距</p>
+<p>例如我的项目中服务器异常500和请求参数错误400显示的提示文字有所区别</p>
+<ol>
+<li>请求参数错误要求显示后端的错误码和错误信息</li>
+<li>后端错误显示 "无法找到服务器"</li>
+</ol>
+<p><br></p>
+<div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">显示缺省页</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">state</span><span class="p">.</span><span class="na">showError</span><span class="p">(</span><span class="n">ResponseException</span><span class="p">(</span><span class="n">code</span> <span class="o">=</span> <span class="m">403</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;请求参数错误&quot;</span><span class="p">))</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">单例错误监听处理参数</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">state</span><span class="p">.</span><span class="na">onError</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">it</span> <span class="k">is</span> <span class="n">ResponseException</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">findViewById</span><span class="o">&lt;</span><span class="n">TextView</span><span class="o">&gt;</span><span class="p">.</span><span class="na">text</span> <span class="o">=</span> <span class="s">&quot;错误码: </span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">code</span><span class="si">}</span><span class="s">, 错误信息: </span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">msg</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">全局错误监听处理参数</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">StateConfig</span><span class="p">.</span><span class="na">onError</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">it</span> <span class="k">is</span> <span class="n">ResponseException</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">findViewById</span><span class="o">&lt;</span><span class="n">TextView</span><span class="o">&gt;</span><span class="p">.</span><span class="na">text</span> <span class="o">=</span> <span class="s">&quot;错误码: </span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">code</span><span class="si">}</span><span class="s">, 错误信息: </span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">msg</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+<p>显示缺省页函数
+<div class="highlight"><pre><span></span><code><span class="kd">fun</span> <span class="nf">showLoading</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="kt">Any?</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> <span class="n">refresh</span><span class="p">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="c1">// 显示加载页面</span>
+<span class="c1">// tag: 传递的tag将被[onLoading]接收</span>
+<span class="c1">// refresh: 是否调用刷新回调[onRefresh], onLoading总会被执行</span>
+
+<span class="kd">fun</span> <span class="nf">showEmpty</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="kt">Any?</span> <span class="o">=</span> <span class="kc">null</span><span class="p">)</span>
+<span class="c1">// 显示空页面</span>
+<span class="c1">// tag: 传递的tag将被[onEmpty]接收</span>
+
+<span class="kd">fun</span> <span class="nf">showError</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="kt">Any?</span> <span class="o">=</span> <span class="kc">null</span><span class="p">)</span>
+<span class="c1">// 显示错误页面</span>
+<span class="c1">// tag: 传递的tag将被[onError]接收</span>
+
+<span class="kd">fun</span> <span class="nf">showContent</span><span class="p">()</span>
+<span class="c1">// 显示内容页面</span>
+</code></pre></div>
+<code>tag</code>即传递的参数, 在监听事件中会被收到(即<code>Any</code>).
+<code>show*</code>函数显示缺省页时传入参数, <code>on*</code>函数接收参数, 然后在<code>on*</code>回调中处理你要的逻辑</p>
+<p>监听事件函数
+<div class="highlight"><pre><span></span><code><span class="kd">fun</span> <span class="nf">onEmpty</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="n">View</span><span class="p">.(</span><span class="kt">Any?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Unit</span><span class="p">):</span> <span class="n">StateLayout</span>
+<span class="c1">// showEmpty() 时回调</span>
+<span class="kd">fun</span> <span class="nf">onError</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="n">View</span><span class="p">.(</span><span class="kt">Any?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Unit</span><span class="p">):</span> <span class="n">StateLayout</span>
+<span class="c1">// showError() 时回调</span>
+<span class="kd">fun</span> <span class="nf">onLoading</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="n">View</span><span class="p">.(</span><span class="kt">Any?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Unit</span><span class="p">):</span> <span class="n">StateLayout</span>
+<span class="c1">// showLoading() 时回调</span>
+<span class="kd">fun</span> <span class="nf">onRefresh</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="n">StateLayout</span><span class="p">.(</span><span class="n">loading</span><span class="p">:</span> <span class="n">View</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Unit</span><span class="p">):</span> <span class="n">StateLayout</span>
+<span class="c1">// showLoading() 时回调</span>
+</code></pre></div></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <!--
+  ~ Copyright (C) 2018 Drake, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+
+<!-- Footer -->
+<footer class="md-footer">
+
+    <!-- Link to previous and/or next page -->
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+
+        <!-- Link to previous page -->
+        
+        <a href="global.html" class="md-footer__link md-footer__link--prev" rel="prev">
+            <div class="md-footer__button md-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer__title">
+                <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+                    全局配置
+                </div>
+            </div>
+        </a>
+        
+
+        <!-- Link to next page -->
+        
+        <a href="retry.html" class="md-footer__link md-footer__link--next" rel="next">
+            <div class="md-footer__title">
+                <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+                    点击重试
+                </div>
+            </div>
+            <div class="md-footer__button md-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+        </a>
+        
+    </nav>
+    
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <a href="https://github.com/liangjingkanji" target="_blank" rel="noopener">
+                    <div class="md-footer-copyright__highlight">
+                        Copyright &copy; 2018 - 2020 劉強東
+                    </div>
+                </a>
+                
+                
+            </div>
+
+            <!-- Social links -->
+            
+        </div>
+    </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.82b56eb2.min.js"></script>
+      
+    
+  </body>
+</html>
