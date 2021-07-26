@@ -33,12 +33,15 @@ import com.drake.statelayout.StateConfig.loadingLayout
 object StateConfig {
 
     @LayoutRes
+    @JvmStatic
     var errorLayout = View.NO_ID
 
     @LayoutRes
+    @JvmStatic
     var emptyLayout = View.NO_ID
 
     @LayoutRes
+    @JvmStatic
     var loadingLayout = View.NO_ID
 
     internal var retryIds: List<Int>? = null
@@ -49,6 +52,7 @@ object StateConfig {
     /**
      * 全局的空页显示回调
      */
+    @JvmStatic
     fun onEmpty(block: View.(Any?) -> Unit) {
         onEmpty = block
     }
@@ -56,6 +60,7 @@ object StateConfig {
     /**
      * 全局的加载页显示回调
      */
+    @JvmStatic
     fun onLoading(block: View.(Any?) -> Unit) {
         onLoading = block
     }
@@ -63,6 +68,7 @@ object StateConfig {
     /**
      * 全局的错误页显示回调
      */
+    @JvmStatic
     fun onError(block: View.(Any?) -> Unit) {
         onError = block
     }
@@ -73,6 +79,7 @@ object StateConfig {
      * 该点击事件会触发[StateLayout.showLoading]
      * 点击事件500ms内防抖动
      */
+    @JvmStatic
     fun setRetryIds(@IdRes vararg ids: Int) {
         retryIds = ids.toList()
     }
