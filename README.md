@@ -51,7 +51,7 @@ allprojects {
 在 module 的 build.gradle 添加依赖
 
 ```groovy
-implementation 'com.github.liangjingkanji:StateLayout:1.0.14'
+implementation 'com.github.liangjingkanji:StateLayout:1.1.0'
 ```
 
 <br>
