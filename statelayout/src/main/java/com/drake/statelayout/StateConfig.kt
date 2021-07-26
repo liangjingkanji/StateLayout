@@ -47,30 +47,6 @@ object StateConfig {
     internal var onLoading: (View.(Any?) -> Unit)? = null
 
     /**
-     * 执行全局配置的[onError]来处理错误布局生命周期
-     * 一般在[StateLayout.onError]中执行, 即单例再次交由全局处理
-     */
-    fun handleError(v: View, tag: Any?) {
-        onError?.invoke(v, tag)
-    }
-
-    /**
-     * 执行全局配置的[onLoading]来处理加载中布局生命周期
-     * 一般在[StateLayout.onLoading]中执行, 即单例再次交由全局处理
-     */
-    fun handleLoading(v: View, tag: Any?) {
-        onLoading?.invoke(v, tag)
-    }
-
-    /**
-     * 执行全局配置的[onEmpty]来处理空布局生命周期
-     * 一般在[StateLayout.onEmpty]中执行, 即单例再次交由全局处理
-     */
-    fun handleEmpty(v: View, tag: Any?) {
-        onEmpty?.invoke(v, tag)
-    }
-
-    /**
      * 全局的空页显示回调
      */
     fun onEmpty(block: View.(Any?) -> Unit) {
