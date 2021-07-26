@@ -7,10 +7,8 @@ $dokka.location:com.drake.statelayout//state/androidx.fragment.app.Fragment#/Poi
 $dokka.location:com.drake.statelayout/StateConfig///PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/index.html
 $dokka.location:com.drake.statelayout/StateConfig/emptyLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/empty-layout.html
 $dokka.location:com.drake.statelayout/StateConfig/errorLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/error-layout.html
-$dokka.location:com.drake.statelayout/StateConfig/handleEmpty/#android.view.View#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/handle-empty.html
-$dokka.location:com.drake.statelayout/StateConfig/handleError/#android.view.View#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/handle-error.html
-$dokka.location:com.drake.statelayout/StateConfig/handleLoading/#android.view.View#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/handle-loading.html
 $dokka.location:com.drake.statelayout/StateConfig/loadingLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/loading-layout.html
+$dokka.location:com.drake.statelayout/StateConfig/onContent/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-content.html
 $dokka.location:com.drake.statelayout/StateConfig/onEmpty/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-empty.html
 $dokka.location:com.drake.statelayout/StateConfig/onError/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-error.html
 $dokka.location:com.drake.statelayout/StateConfig/onLoading/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-loading.html
@@ -22,13 +20,14 @@ $dokka.location:com.drake.statelayout/StateLayout/errorLayout/#/PointingToDeclar
 $dokka.location:com.drake.statelayout/StateLayout/isNetConnected/android.content.Context?#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/is-net-connected.html
 $dokka.location:com.drake.statelayout/StateLayout/loaded/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/loaded.html
 $dokka.location:com.drake.statelayout/StateLayout/loadingLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/loading-layout.html
+$dokka.location:com.drake.statelayout/StateLayout/onContent/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-content.html
 $dokka.location:com.drake.statelayout/StateLayout/onEmpty/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-empty.html
 $dokka.location:com.drake.statelayout/StateLayout/onError/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-error.html
 $dokka.location:com.drake.statelayout/StateLayout/onLoading/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-loading.html
 $dokka.location:com.drake.statelayout/StateLayout/onRefresh/#kotlin.Function2[com.drake.statelayout.StateLayout,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-refresh.html
 $dokka.location:com.drake.statelayout/StateLayout/setContentView/#android.view.View/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/set-content-view.html
 $dokka.location:com.drake.statelayout/StateLayout/setRetryIds/#kotlin.IntArray/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/set-retry-ids.html
-$dokka.location:com.drake.statelayout/StateLayout/showContent/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-content.html
+$dokka.location:com.drake.statelayout/StateLayout/showContent/#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-content.html
 $dokka.location:com.drake.statelayout/StateLayout/showEmpty/#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-empty.html
 $dokka.location:com.drake.statelayout/StateLayout/showError/#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-error.html
 $dokka.location:com.drake.statelayout/StateLayout/showLoading/#kotlin.Any?#kotlin.Boolean#kotlin.Boolean/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-loading.html
