@@ -48,6 +48,7 @@ object StateConfig {
     internal var onEmpty: (View.(Any?) -> Unit)? = null
     internal var onError: (View.(Any?) -> Unit)? = null
     internal var onLoading: (View.(Any?) -> Unit)? = null
+    internal var onContent: (View.(Any?) -> Unit)? = null
 
     /**
      * 全局的空页显示回调
@@ -58,19 +59,27 @@ object StateConfig {
     }
 
     /**
-     * 全局的加载页显示回调
-     */
-    @JvmStatic
-    fun onLoading(block: View.(Any?) -> Unit) {
-        onLoading = block
-    }
-
-    /**
      * 全局的错误页显示回调
      */
     @JvmStatic
     fun onError(block: View.(Any?) -> Unit) {
         onError = block
+    }
+
+    /**
+     * 全局的成功页显示回调
+     */
+    @JvmStatic
+    fun onContent(block: View.(Any?) -> Unit) {
+        onContent = block
+    }
+
+    /**
+     * 全局的加载页显示回调
+     */
+    @JvmStatic
+    fun onLoading(block: View.(Any?) -> Unit) {
+        onLoading = block
     }
 
     /**

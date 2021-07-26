@@ -57,6 +57,7 @@ class StateLayout @JvmOverloads constructor(
 
     private var onEmpty: (View.(tag: Any?) -> Unit)? = null
     private var onError: (View.(tag: Any?) -> Unit)? = null
+    private var onContent: (View.(tag: Any?) -> Unit)? = null
     private var onLoading: (View.(tag: Any?) -> Unit)? = null
     private var onRefresh: (StateLayout.(tag: Any?) -> Unit)? = null
 
@@ -135,22 +136,30 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
-     * 当加载中缺省页显示时回调
-     * @see showLoading
-     * @see StateConfig.onLoading
-     */
-    fun onLoading(block: View.(tag: Any?) -> Unit): StateLayout {
-        onLoading = block
-        return this
-    }
-
-    /**
      * 当错误缺省页显示时回调
      * @see showError
      * @see StateConfig.onError
      */
     fun onError(block: View.(tag: Any?) -> Unit): StateLayout {
         onError = block
+        return this
+    }
+
+    /**
+     * 当[showContent]时会回调该函数参数, 一般将网络请求等异步操作放入其中
+     */
+    fun onContent(block: View.(tag: Any?) -> Unit): StateLayout {
+        onContent = block
+        return this
+    }
+
+    /**
+     * 当加载中缺省页显示时回调
+     * @see showLoading
+     * @see StateConfig.onLoading
+     */
+    fun onLoading(block: View.(tag: Any?) -> Unit): StateLayout {
+        onLoading = block
         return this
     }
 
@@ -226,10 +235,10 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 显示内容布局, 表示成功缺省页
      */
-    fun showContent() {
+    fun showContent(tag: Any? = null) {
         if (trigger && stateChanged) return
         loaded = true
-        show(contentId)
+        show(contentId, tag)
     }
 
     // </editor-fold>
@@ -301,7 +310,11 @@ class StateLayout @JvmOverloads constructor(
                     }
 
                     // 内容
-                    else -> status = Status.CONTENT
+                    else -> {
+                        status = Status.CONTENT
+                        if (onContent == null) StateConfig.onContent?.let { onContent = it }
+                        onContent?.invoke(view, tag)
+                    }
                 }
 
             } catch (e: Exception) {
