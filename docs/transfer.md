@@ -45,20 +45,8 @@ fun showError(tag: Any? = null)
 // 显示错误页面
 // tag: 传递的tag将被[onError]接收
 
-fun showContent()
+fun showContent(tag: Any? = null)
 // 显示内容页面
 ```
 `tag`即传递的参数, 在监听事件中会被收到(即`Any`).
 `show*`函数显示缺省页时传入参数, `on*`函数接收参数, 然后在`on*`回调中处理你要的逻辑
-
-监听事件函数
-```kotlin
-fun onEmpty(block: View.(Any?) -> Unit): StateLayout
-// showEmpty() 时回调
-fun onError(block: View.(Any?) -> Unit): StateLayout
-// showError() 时回调
-fun onLoading(block: View.(Any?) -> Unit): StateLayout
-// showLoading() 时回调
-fun onRefresh(block: StateLayout.(loading: View) -> Unit): StateLayout
-// showLoading() 时回调
-```

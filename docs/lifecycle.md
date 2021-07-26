@@ -2,10 +2,11 @@
 
 | 函数 | 描述 |
 |-|-|
-| [onEmpty](api/statelayout/com.drake.statelayout/-state-layout/on-empty.md) | [showEmpty](api/statelayout/com.drake.statelayout/-state-layout/show-empty.md)时回调 |
-| [onError](api/statelayout/com.drake.statelayout/-state-layout/on-error.md) | [showError](api/statelayout/com.drake.statelayout/-state-layout/show-error.md)时回调 |
-| [onLoading](api/statelayout/com.drake.statelayout/-state-layout/on-loading.md) | [showLoading](api/statelayout/com.drake.statelayout/-state-layout/show-loading.md)时回调 |
-| [onRefresh](api/statelayout/com.drake.statelayout/-state-layout/on-loading.md) | [showLoading](api/statelayout/com.drake.statelayout/-state-layout/show-loading.md)时回调, 和`onLoading`不同的是该函数的`this`是StateLayout, 一般在其中执行加载网络或异步任务的逻辑, 而不是加载视图|
+| [onEmpty](/api/-state-layout/com.drake.statelayout/-state-layout/on-empty.html) | [showEmpty](/api/-state-layout/com.drake.statelayout/-state-layout/show-empty.html)时回调 |
+| [onError](/api/-state-layout/com.drake.statelayout/-state-layout/on-error.html) | [showError](/api/-state-layout/com.drake.statelayout/-state-layout/show-error.html)时回调 |
+| [onContent](/api/-state-layout/com.drake.statelayout/-state-layout/on-content.html) | [showContent](/api/-state-layout/com.drake.statelayout/-state-layout/show-content.html)时回调 |
+| [onLoading](/api/-state-layout/com.drake.statelayout/-state-layout/on-loading.html) | [showLoading](/api/-state-layout/com.drake.statelayout/-state-layout/show-loading.html)时回调 |
+| [onRefresh](/api/-state-layout/com.drake.statelayout/-state-layout/on-loading.html) | [showLoading](/api/-state-layout/com.drake.statelayout/-state-layout/show-loading.html)时回调, 和`onLoading`不同的是该函数的`this`是StateLayout, 一般在其中执行加载网络或异步任务的逻辑, 而不是加载视图|
 
 每个StateLayout实例都可以设置单独的回调监听, 同时StateConfig可以设置全局的回调监听
 
@@ -35,7 +36,7 @@
 === "示例"
     ```kotlin
     state.onEmpty {
-
+        findViewById<TextView>(R.id.msg).text = "空布局信息"
     }
 
     state.onError {
@@ -43,10 +44,14 @@
     }
 
     state.onLoading {
-        findViewById<TextView>(R.id.msg).text = "空布局信息"
+
     }
 
     state.onRefresh {
+
+    }
+
+    state.onContent {
 
     }
     ```
