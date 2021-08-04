@@ -19,6 +19,7 @@
 package com.drake.statelayout
 
 import android.content.Context
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.os.Handler
 import android.os.Looper
@@ -29,20 +30,20 @@ import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.collection.ArrayMap
+import com.drake.statelayout.Status.*
 
 /**
- * 简单配置缺省页
+ * 应用全局缺省页
  *
  * 全局配置
  * 单例配置
- * 支持代码或者布局创建
- * 无网络情况下showLoading显示错误布局, 有网则显示加载中布局
- *
- * @property emptyLayout 空页的layoutRes
- * @property errorLayout 错误页的layoutRes
- * @property loadingLayout 加载页的layoutRes
- * @property status 当前缺省页状态[Status]
- * @property loaded 当前缺省页是否加载成功过, 即是否执行过[showContent]
+ * 局部缺省页
+ * 数据传递
+ * 监听缺省页显示生命周期
+ * 自定义动画
+ * 布局或代码声明皆可
+ * 快速配置点击重试
+ * 无网络立即显示错误缺省页
  */
 class StateLayout @JvmOverloads constructor(
     context: Context,
@@ -50,56 +51,66 @@ class StateLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private var contentId: Int = -2
-    private val contentViews = ArrayMap<Int, View>()
-    private var retryIds: List<Int>? = null
+    private val views = ArrayMap<Status, View>()
     private var refresh = true
-
-    private var onEmpty: (View.(tag: Any?) -> Unit)? = null
-    private var onError: (View.(tag: Any?) -> Unit)? = null
-    private var onContent: (View.(tag: Any?) -> Unit)? = null
-    private var onLoading: (View.(tag: Any?) -> Unit)? = null
-    private var onRefresh: (StateLayout.(tag: Any?) -> Unit)? = null
-
     private var stateChanged = false
     private var trigger = false
 
+    private var retryIds: IntArray? = null
+        get() = field ?: StateConfig.retryIds
+    private var onEmpty: (View.(tag: Any?) -> Unit)? = null
+        get() = field ?: StateConfig.onEmpty
+    private var onError: (View.(tag: Any?) -> Unit)? = null
+        get() = field ?: StateConfig.onError
+    private var onContent: (View.(tag: Any?) -> Unit)? = null
+        get() = field ?: StateConfig.onContent
+    private var onLoading: (View.(tag: Any?) -> Unit)? = null
+        get() = field ?: StateConfig.onLoading
+    private var onRefresh: (StateLayout.(tag: Any?) -> Unit)? = null
+
+    /** 当前缺省页是否加载成功过, 即是否执行过[showContent] */
     var loaded = false
 
-    var status = Status.CONTENT
+    /** 当前缺省页状态[Status] */
+    var status = CONTENT
         private set
 
     // <editor-fold desc="设置缺省页">
 
+    /** 错误页面布局 */
     @LayoutRes
     var errorLayout: Int = NO_ID
+        get() = if (field == NO_ID) StateConfig.errorLayout else field
         set(value) {
             if (field != value) {
-                remove(field)
+                removeStatus(ERROR)
                 field = value
             }
         }
 
+    /** 空页面布局 */
     @LayoutRes
     var emptyLayout: Int = NO_ID
+        get() = if (field == NO_ID) StateConfig.emptyLayout else field
         set(value) {
             if (field != value) {
-                remove(field)
+                removeStatus(EMPTY)
                 field = value
             }
         }
 
+    /** 加载中页面布局 */
     @LayoutRes
     var loadingLayout: Int = NO_ID
+        get() = if (field == NO_ID) StateConfig.loadingLayout else field
         set(value) {
             if (field != value) {
-                remove(field)
+                removeStatus(LOADING)
                 field = value
             }
         }
 
     // </editor-fold>
-
 
     init {
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.StateLayout)
@@ -115,24 +126,23 @@ class StateLayout @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
         if (childCount > 1 || childCount == 0) {
-            throw UnsupportedOperationException("StateLayout只能包含一个子视图")
+            throw UnsupportedOperationException("StateLayout only have one child view")
         }
-        if (contentViews.size == 0) {
+        if (views.size == 0) {
             val view = getChildAt(0)
             setContentView(view)
         }
     }
 
-    // <editor-fold desc="生命周期">
+    // <editor-fold desc="监听缺省页">
 
     /**
      * 当空缺省页显示时回调
      * @see showEmpty
      * @see StateConfig.onEmpty
      */
-    fun onEmpty(block: View.(tag: Any?) -> Unit): StateLayout {
+    fun onEmpty(block: View.(tag: Any?) -> Unit) = apply {
         onEmpty = block
-        return this
     }
 
     /**
@@ -140,17 +150,8 @@ class StateLayout @JvmOverloads constructor(
      * @see showError
      * @see StateConfig.onError
      */
-    fun onError(block: View.(tag: Any?) -> Unit): StateLayout {
+    fun onError(block: View.(tag: Any?) -> Unit) = apply {
         onError = block
-        return this
-    }
-
-    /**
-     * 当[showContent]时会回调该函数参数, 一般将网络请求等异步操作放入其中
-     */
-    fun onContent(block: View.(tag: Any?) -> Unit): StateLayout {
-        onContent = block
-        return this
     }
 
     /**
@@ -158,102 +159,87 @@ class StateLayout @JvmOverloads constructor(
      * @see showLoading
      * @see StateConfig.onLoading
      */
-    fun onLoading(block: View.(tag: Any?) -> Unit): StateLayout {
+    fun onLoading(block: View.(tag: Any?) -> Unit) = apply {
         onLoading = block
-        return this
     }
 
     /**
      * 当[showLoading]时会回调该函数参数, 一般将网络请求等异步操作放入其中
      */
-    fun onRefresh(block: StateLayout.(tag: Any?) -> Unit): StateLayout {
+    fun onRefresh(block: StateLayout.(tag: Any?) -> Unit) = apply {
         onRefresh = block
-        return this
+    }
+
+    /**
+     * 当[showContent]时会回调该函数参数, 一般将网络请求等异步操作放入其中
+     * @see showContent
+     * @see StateConfig.onContent
+     */
+    fun onContent(block: View.(tag: Any?) -> Unit) = apply {
+        onContent = block
     }
 
     // </editor-fold>
 
-
     // <editor-fold desc="显示缺省页">
-
 
     /**
      * 有网则显示加载中, 无网络直接显示错误, 会触发[onLoading]的函数参数
-     * @param tag 传递参数将被[onLoading]接收
-     * @param silent 仅回调[onRefresh], 不回调[onLoading]
+     * @param tag 传递任意对象给[onLoading]函数
+     * @param silent 仅执行[onRefresh], 不会显示加载中布局, 也不执行[onLoading]
      * @param refresh 是否回调[onRefresh]
      */
     fun showLoading(tag: Any? = null, silent: Boolean = false, refresh: Boolean = true) {
         this.refresh = refresh
-
-        if (loadingLayout == NO_ID) {
-            loadingLayout = StateConfig.loadingLayout
-        }
-
-        if (status == Status.LOADING) {
-            if (onLoading == null) StateConfig.onLoading?.let { onLoading = it }
-            onLoading?.invoke(getView(loadingLayout), tag)
-            return
-        }
-
         if (silent && refresh) {
             onRefresh?.invoke(this, tag)
             return
         }
-
-        if (loadingLayout != NO_ID) {
-            show(loadingLayout, tag)
+        if (status == LOADING) {
+            onLoading?.invoke(getStatusView(LOADING), tag)
+            return
         }
+        show(LOADING, tag)
     }
 
     /**
      * 显示空页, 会触发[onEmpty]的函数参数
-     * @param tag 传递的tag将被[onEmpty]接收
+     * @param tag 传递任意对象给[onEmpty]函数
      */
     fun showEmpty(tag: Any? = null) {
-        if (emptyLayout == NO_ID) {
-            emptyLayout = StateConfig.emptyLayout
-        }
-        if (emptyLayout != NO_ID) {
-            show(emptyLayout, tag)
-        }
+        show(EMPTY, tag)
     }
 
     /**
      * 显示错误页, 会触发[onError]的函数参数
-     * @param tag 传递的tag将被[onError]接收
+     * @param tag 传递任意对象给[onError]函数
      */
     fun showError(tag: Any? = null) {
-        if (errorLayout == NO_ID) {
-            errorLayout = StateConfig.errorLayout
-        }
-        if (errorLayout != NO_ID) {
-            show(errorLayout, tag)
-        }
+        show(ERROR, tag)
     }
 
     /**
      * 显示内容布局, 表示成功缺省页
+     * @param tag 传递任意对象给[onContent]函数
      */
     fun showContent(tag: Any? = null) {
         if (trigger && stateChanged) return
-        loaded = true
-        show(contentId, tag)
+        show(CONTENT, tag)
     }
 
     // </editor-fold>
 
     /**
-     * 错误页/空页中的布局控件包含指定IdRes的会设置点击事件, 该点击事件会触发[StateLayout.showLoading]
-     * 点击事件500ms内防抖动
+     * 为错误页/空页中的指定Id控件设置点击事件, 点击会触发[showLoading]
+     * 默认点击500ms内防抖动
      */
-    fun setRetryIds(@IdRes vararg ids: Int): StateLayout {
-        retryIds = ids.toList()
-        return this
+    fun setRetryIds(@IdRes vararg ids: Int) = apply {
+        retryIds = ids
     }
 
     /**
-     * 一般情况下开发者无需关心, 这属于配合其他框架预览函数
+     * 本函数为方便其他框架热插拔使用, 开发者一般情况不使用
+     * 本函数调用两次之间显示缺省页只会有效执行一次
      */
     fun trigger(): Boolean {
         trigger = !trigger
@@ -261,113 +247,115 @@ class StateLayout @JvmOverloads constructor(
         return trigger
     }
 
-
     /**
      * 显示视图
      */
-    private fun show(layoutId: Int, tag: Any? = null) {
-        if (trigger) {
-            stateChanged = true
-        }
+    private fun show(status: Status, tag: Any? = null) {
+        if (trigger) stateChanged = true
+        this.status = status
         runMain {
             try {
-                val view = getView(layoutId)
-                for (value in contentViews.values) {
-                    if (view == value) continue
-                    value.visibility = View.GONE
-                }
-                view.visibility = View.VISIBLE
-                when (layoutId) {
-
-                    // 空
-                    emptyLayout -> {
-                        status = Status.EMPTY
-                        if (retryIds == null) retryIds = StateConfig.retryIds
+                val view = showStatus(status)
+                when (status) {
+                    EMPTY -> {
                         retryIds?.forEach {
-                            view.findViewById<View>(it)?.throttleClick { showLoading() }
+                            view.findViewById<View>(it)?.throttleClick {
+                                showLoading()
+                            }
                         }
-                        if (onEmpty == null) StateConfig.onEmpty?.let { onEmpty = it }
                         onEmpty?.invoke(view, tag)
                     }
-
-                    // 错误
-                    errorLayout -> {
-                        status = Status.ERROR
-                        if (retryIds == null) retryIds = StateConfig.retryIds
+                    ERROR -> {
                         retryIds?.forEach {
-                            view.findViewById<View>(it)?.throttleClick { showLoading() }
+                            view.findViewById<View>(it)?.throttleClick {
+                                showLoading()
+                            }
                         }
-                        if (onError == null) StateConfig.onError?.let { onError = it }
                         onError?.invoke(view, tag)
                     }
-
-                    // 加载中
-                    loadingLayout -> {
-                        status = Status.LOADING
-                        if (onLoading == null) StateConfig.onLoading?.let { onLoading = it }
+                    LOADING -> {
                         onLoading?.invoke(view, tag)
                         if (refresh) onRefresh?.invoke(this, tag)
                     }
-
-                    // 内容
                     else -> {
-                        status = Status.CONTENT
-                        if (onContent == null) StateConfig.onContent?.let { onContent = it }
+                        loaded = true
                         onContent?.invoke(view, tag)
                     }
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-
-    private fun remove(layoutId: Int?) {
-        if (contentViews.containsKey(layoutId)) {
-            val stateView = contentViews.remove(layoutId)
-            removeView(stateView)
+    private fun showStatus(status: Status): View {
+        val target = getStatusView(status)
+        for (view in views.values) {
+            if (target == view) view.visibility = VISIBLE
+            view.visibility = GONE
         }
+        return target
     }
 
+    /**
+     * 删除指定的缺省页
+     */
+    private fun removeStatus(status: Status?) {
+        views.remove(status)?.let { removeView(it) }
+    }
+
+    /**
+     * 返回缺省页视图对象
+     */
     @Throws(NullPointerException::class)
-    private fun getView(@LayoutRes layoutId: Int): View {
-        contentViews[layoutId]?.apply {
-            return this
+    private fun getStatusView(status: Status): View {
+        views[status]?.let { return it }
+        val layoutId = when (status) {
+            EMPTY -> emptyLayout
+            ERROR -> errorLayout
+            LOADING -> loadingLayout
+            else -> NO_ID
+        }
+        if (layoutId == NO_ID) {
+            when (status) {
+                ERROR -> throw Resources.NotFoundException("No StateLayout errorLayout is set")
+                EMPTY -> throw Resources.NotFoundException("No StateLayout emptyLayout is set")
+                LOADING -> throw Resources.NotFoundException("No StateLayout loadingLayout is set")
+                else -> throw Resources.NotFoundException("No StateLayout contentView is set")
+            }
         }
         val view = LayoutInflater.from(context).inflate(layoutId, this, false)
         addView(view)
-
-        contentViews[layoutId] = view
+        views[status] = view
         return view
     }
 
-
     /**
-     * 标记视图为内容布局, 用于扩展替换内容. 一般情况不需要使用
+     * 标记视图为内容布局, 本函数为其他框架进行热插拔适配使用, 一般情况开发者不使用
      */
     fun setContentView(view: View) {
-        contentViews[contentId] = view
+        views[CONTENT] = view
     }
 
     /**
      * 判断是否有网络连接
      */
-    fun Context?.isNetConnected(): Boolean {
+    private fun Context?.isNetConnected(): Boolean {
         if (this != null) {
-            val mConnectivityManager = getSystemService(
-                Context.CONNECTIVITY_SERVICE
-            ) as ConnectivityManager
-            val mNetworkInfo = mConnectivityManager.activeNetworkInfo
-            if (mNetworkInfo != null) {
+            val connectivityManager =
+                getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+            if (networkInfo != null) {
                 @Suppress("DEPRECATION")
-                return mNetworkInfo.isAvailable
+                return networkInfo.isAvailable
             }
         }
         return false
     }
 
+    /**
+     * 保证运行在主线程
+     */
     private fun runMain(block: () -> Unit) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             block()
@@ -376,4 +364,3 @@ class StateLayout @JvmOverloads constructor(
         }
     }
 }
-

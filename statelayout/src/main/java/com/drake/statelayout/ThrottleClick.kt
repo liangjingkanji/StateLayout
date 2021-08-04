@@ -20,7 +20,10 @@ import android.view.View
 import java.util.concurrent.TimeUnit
 
 /**
- * 防抖动
+ * 设置防抖动的点击事件
+ * @param interval 间隔时间
+ * @param unit 时间单位
+ * @param block 点击回调
  */
 internal fun View.throttleClick(
     interval: Long = 500,
