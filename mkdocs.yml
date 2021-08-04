@@ -40,5 +40,6 @@ nav:
   - 全局配置: global.md
   - 传递数据: transfer.md
   - 点击重试: retry.md
+  - 自定义动画: animation.md
   - 自动显示缺省页: extension.md
   - 1.x文档: api/index.html
