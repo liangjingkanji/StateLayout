@@ -17,7 +17,6 @@ $dokka.location:com.drake.statelayout/StateLayout///PointingToDeclaration/-stat
 $dokka.location:com.drake.statelayout/StateLayout/StateLayout/#android.content.Context#android.util.AttributeSet?#kotlin.Int/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/-state-layout.html
 $dokka.location:com.drake.statelayout/StateLayout/emptyLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/empty-layout.html
 $dokka.location:com.drake.statelayout/StateLayout/errorLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/error-layout.html
-$dokka.location:com.drake.statelayout/StateLayout/isNetConnected/android.content.Context?#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/is-net-connected.html
 $dokka.location:com.drake.statelayout/StateLayout/loaded/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/loaded.html
 $dokka.location:com.drake.statelayout/StateLayout/loadingLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/loading-layout.html
 $dokka.location:com.drake.statelayout/StateLayout/onContent/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-content.html
