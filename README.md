@@ -20,16 +20,18 @@
 
 ### 功能
 
-- [x] 布局和代码创建缺省页
-- [x] Fragment/Activity/View/ConstraintLayout/RecyclerView 支持函数包裹
-- [x] 全局/单例缺省页
-- [x] 缺省页生命周期
-- [x] 加载任务回调
-- [x] 传递标签
-- [x] 点击重试
-- [x] 支持异步线程
-- [x] 无网络情况下立即显示错误页面
-- [x] Kotlin特性
+- [x] 优雅的函数设计
+- [x] 局部缺省页
+- [x] 布局或代码声明皆可
+- [x] 全局/单例配置
+- [x] 监听缺省页显示
+- [x] 自定义动画
+- [x] 多种状态缺省页
+- [x] 网络请求回调
+- [x] 传递任意对象作为标签
+- [x] 快速配置点击重试
+- [x] 异步线程
+- [x] 无网络立即显示错误缺省页
 - [x] 配合列表使用自动化显示列表缺省页
 - [x] 配合网络请求自动化显示缺省页
 
@@ -51,7 +53,7 @@ allprojects {
 在 module 的 build.gradle 添加依赖
 
 ```groovy
-implementation 'com.github.liangjingkanji:StateLayout:1.1.0'
+implementation 'com.github.liangjingkanji:StateLayout:1.2.0'
 ```
 
 <br>

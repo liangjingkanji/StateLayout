@@ -291,8 +291,11 @@ class StateLayout @JvmOverloads constructor(
     private fun showStatus(status: Status): View {
         val target = getStatusView(status)
         for (view in views.values) {
-            if (target == view) view.visibility = VISIBLE
-            view.visibility = GONE
+            if (target == view) {
+                view.visibility = VISIBLE
+            } else {
+                view.visibility = GONE
+            }
         }
         return target
     }
