@@ -21,10 +21,10 @@ dependencies {
 
 框架可以实现以下功能
 
-1. [缺省页](https://liangjingkanji.github.io/BRV/state.html)
-1. [下拉刷新/上拉加载/缺省页](https://liangjingkanji.github.io/BRV/refresh.html)
-1. [拉取更多](https://liangjingkanji.github.io/BRV/upfetch.html)
-1. [预加载/预拉取](https://liangjingkanji.github.io/BRV/preload.html)
+1. [缺省页](https://liangjingkanji.github.io/BRV/state)
+1. [下拉刷新/上拉加载/缺省页](https://liangjingkanji.github.io/BRV/refresh)
+1. [拉取更多](https://liangjingkanji.github.io/BRV/upfetch)
+1. [预加载/预拉取](https://liangjingkanji.github.io/BRV/preload)
 
 ## 网络请求缺省页
 
