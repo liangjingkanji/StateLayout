@@ -1,5 +1,4 @@
-
-<p align="center"><img src="https://i.imgur.com/YW7EzWh.gif" width="30%"/></p>
+<p align="center"><img src="https://i.loli.net/2021/08/14/kqTVfluhDo3tAHU.gif" width="30%"/></p>
 
 首先明确的就是StateLayout布局包裹的内容才能控制其显示缺省页, 所以在我们创建缺省页的时候一定要包裹住一个内容作为内容页面
 
@@ -36,7 +35,7 @@ Activity/Fragment/View都可以使用函数`state`来创建StateLayout, 代码�
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="加载成功" />
-
+    
     </com.drake.statelayout.StateLayout>
     ```
 
@@ -76,7 +75,7 @@ TextView即我们假设的内容页
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="加载成功" />
-
+    
     </com.drake.statelayout.StateLayout>
     ```
 

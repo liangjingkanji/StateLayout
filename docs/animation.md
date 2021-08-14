@@ -6,7 +6,7 @@
 
 这里演示如何创建渐变动画, 如果想要其他动画可以自己拓展
 
-<img src="https://i.imgur.com/J8gSo71.gif" width="250"/>
+<img src="https://i.loli.net/2021/08/14/97rDSVuKIodF1wO.gif" width="250"/>
 
 1. 为避免重复代码首先创建统一的动画函数
 
@@ -26,7 +26,7 @@
         emptyLayout = R.layout.layout_empty
         errorLayout = R.layout.layout_error
         loadingLayout = R.layout.layout_loading
-
+    
         onError {
             startAnimation()
         }
