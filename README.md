@@ -4,7 +4,7 @@
 
 <p align="center"><strong>整个应用的缺省页</strong></p><br>
 
-<p align="center"><a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a> | <a href="https://coding-pages-bucket-3558162-8706000-16647-587725-1252757332.cos-website.ap-shanghai.myqcloud.com/">备用访问</a></p>
+<p align="center"><a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a> | <a href="https://statelayout-1252757332.cos-website.ap-guangzhou.myqcloud.com">备用访问</a></p>
 
 <p align="center">
 <a href="https://jitpack.io/#liangjingkanji/StateLayout"><img src="https://jitpack.io/v/liangjingkanji/StateLayout.svg"/></a>
