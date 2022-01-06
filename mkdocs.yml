@@ -42,4 +42,5 @@ nav:
   - 点击重试: retry.md
   - 自定义动画: animation.md
   - 自动显示缺省页: extension.md
+  - 常见问题: issues.md
   - 1.x文档: api/index.html
