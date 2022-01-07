@@ -80,6 +80,6 @@ fun View.state(): StateLayout {
         }
     }
 
-    stateLayout.setContentView(this)
+    stateLayout.setContent(this)
     return stateLayout
 }

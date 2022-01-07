@@ -47,6 +47,10 @@ object StateConfig {
     @JvmStatic
     var loadingLayout = View.NO_ID
 
+    /** 处理缺省页状态变更 */
+    @JvmStatic
+    var stateChangedHandler: StateChangedHandler? = null
+
     /**
      * 全局的空缺省页显示回调
      */

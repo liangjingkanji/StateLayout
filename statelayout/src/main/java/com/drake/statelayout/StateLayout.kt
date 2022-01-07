@@ -23,13 +23,13 @@ import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.os.Handler
 import android.os.Looper
+import android.util.ArrayMap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import androidx.collection.ArrayMap
 import com.drake.statelayout.Status.*
 
 /**
@@ -51,7 +51,7 @@ class StateLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val views = ArrayMap<Status, View>()
+    private val views = ArrayMap<Status, StatePair>()
     private var refresh = true
     private var stateChanged = false
     private var trigger = false
@@ -110,6 +110,12 @@ class StateLayout @JvmOverloads constructor(
             }
         }
 
+    /** 处理缺省页状态变更 */
+    var stateChangedHandler: StateChangedHandler? = null
+        get() {
+            return field ?: StateConfig.stateChangedHandler ?: StateChangedHandler()
+        }
+
     // </editor-fold>
 
     init {
@@ -130,11 +136,20 @@ class StateLayout @JvmOverloads constructor(
         }
         if (views.size == 0) {
             val view = getChildAt(0)
-            setContentView(view)
+            setContent(view)
         }
     }
 
     // <editor-fold desc="监听缺省页">
+
+    /**
+     * 当加载中缺省页显示时回调
+     * @see showLoading
+     * @see StateConfig.onLoading
+     */
+    fun onLoading(block: View.(tag: Any?) -> Unit) = apply {
+        onLoading = block
+    }
 
     /**
      * 当空缺省页显示时回调
@@ -152,15 +167,6 @@ class StateLayout @JvmOverloads constructor(
      */
     fun onError(block: View.(tag: Any?) -> Unit) = apply {
         onError = block
-    }
-
-    /**
-     * 当加载中缺省页显示时回调
-     * @see showLoading
-     * @see StateConfig.onLoading
-     */
-    fun onLoading(block: View.(tag: Any?) -> Unit) = apply {
-        onLoading = block
     }
 
     /**
@@ -196,10 +202,10 @@ class StateLayout @JvmOverloads constructor(
             return
         }
         if (status == LOADING) {
-            onLoading?.invoke(getStatusView(LOADING), tag)
+            onLoading?.invoke(getStatusView(LOADING, tag), tag)
             return
         }
-        show(LOADING, tag)
+        showStatus(LOADING, tag)
     }
 
     /**
@@ -207,7 +213,7 @@ class StateLayout @JvmOverloads constructor(
      * @param tag 传递任意对象给[onEmpty]函数
      */
     fun showEmpty(tag: Any? = null) {
-        show(EMPTY, tag)
+        showStatus(EMPTY, tag)
     }
 
     /**
@@ -215,7 +221,7 @@ class StateLayout @JvmOverloads constructor(
      * @param tag 传递任意对象给[onError]函数
      */
     fun showError(tag: Any? = null) {
-        show(ERROR, tag)
+        showStatus(ERROR, tag)
     }
 
     /**
@@ -224,7 +230,7 @@ class StateLayout @JvmOverloads constructor(
      */
     fun showContent(tag: Any? = null) {
         if (trigger && stateChanged) return
-        show(CONTENT, tag)
+        showStatus(CONTENT, tag)
     }
 
     // </editor-fold>
@@ -250,36 +256,44 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 显示视图
      */
-    private fun show(status: Status, tag: Any? = null) {
+    private fun showStatus(status: Status, tag: Any? = null) {
         if (trigger) stateChanged = true
+        if (this.status == status) return
         this.status = status
         runMain {
             try {
-                val view = showStatus(status)
+                val targetStatusView = getStatusView(status, tag)
+                views.filter {
+                    it.key != status
+                }.forEach {
+                    val statePair = it.value
+                    stateChangedHandler?.onRemove(this, statePair.first, it.key, statePair.second)
+                }
+                stateChangedHandler?.onAdd(this, targetStatusView, status, tag)
                 when (status) {
                     EMPTY -> {
                         retryIds?.forEach {
-                            view.findViewById<View>(it)?.throttleClick {
+                            targetStatusView.findViewById<View>(it)?.throttleClick {
                                 showLoading()
                             }
                         }
-                        onEmpty?.invoke(view, tag)
+                        onEmpty?.invoke(targetStatusView, tag)
                     }
                     ERROR -> {
                         retryIds?.forEach {
-                            view.findViewById<View>(it)?.throttleClick {
+                            targetStatusView.findViewById<View>(it)?.throttleClick {
                                 showLoading()
                             }
                         }
-                        onError?.invoke(view, tag)
+                        onError?.invoke(targetStatusView, tag)
                     }
                     LOADING -> {
-                        onLoading?.invoke(view, tag)
+                        onLoading?.invoke(targetStatusView, tag)
                         if (refresh) onRefresh?.invoke(this, tag)
                     }
                     else -> {
                         loaded = true
-                        onContent?.invoke(view, tag)
+                        onContent?.invoke(targetStatusView, tag)
                     }
                 }
             } catch (e: Exception) {
@@ -288,31 +302,22 @@ class StateLayout @JvmOverloads constructor(
         }
     }
 
-    private fun showStatus(status: Status): View {
-        val target = getStatusView(status)
-        for (view in views.values) {
-            if (target == view) {
-                view.visibility = VISIBLE
-            } else {
-                view.visibility = GONE
-            }
-        }
-        return target
-    }
-
     /**
      * 删除指定的缺省页
      */
-    private fun removeStatus(status: Status?) {
-        views.remove(status)?.let { removeView(it) }
+    private fun removeStatus(status: Status) {
+        views.remove(status)
     }
 
     /**
      * 返回缺省页视图对象
      */
     @Throws(NullPointerException::class)
-    private fun getStatusView(status: Status): View {
-        views[status]?.let { return it }
+    private fun getStatusView(status: Status, tag: Any?): View {
+        views[status]?.let {
+            it.second = tag
+            return it.first
+        }
         val layoutId = when (status) {
             EMPTY -> emptyLayout
             ERROR -> errorLayout
@@ -328,16 +333,15 @@ class StateLayout @JvmOverloads constructor(
             }
         }
         val view = LayoutInflater.from(context).inflate(layoutId, this, false)
-        addView(view)
-        views[status] = view
+        views[status] = StatePair(view, tag)
         return view
     }
 
     /**
      * 标记视图为内容布局, 本函数为其他框架进行热插拔适配使用, 一般情况开发者不使用
      */
-    fun setContentView(view: View) {
-        views[CONTENT] = view
+    fun setContent(view: View) {
+        views[CONTENT] = StatePair(view, null)
     }
 
     /**
