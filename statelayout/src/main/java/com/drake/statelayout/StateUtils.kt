@@ -30,6 +30,7 @@ import androidx.viewpager.widget.ViewPager
 
 /**
  * 创建一个缺省页来包裹Activity
+ * 推荐还是在XML中创建[StateLayout]
  */
 fun Activity.state(): StateLayout {
     val view = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
@@ -38,6 +39,7 @@ fun Activity.state(): StateLayout {
 
 /**
  * 创建一个缺省页来包裹Fragment
+ * 推荐还是在XML中创建[StateLayout]
  */
 fun Fragment.state(): StateLayout {
     val stateLayout = view!!.state()
@@ -57,6 +59,7 @@ fun Fragment.state(): StateLayout {
 
 /**
  * 创建一个缺省页来包裹视图
+ * 推荐还是在XML中创建[StateLayout]
  */
 fun View.state(): StateLayout {
     val parent = parent as ViewGroup
