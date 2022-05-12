@@ -20,7 +20,6 @@ package com.drake.statelayout
 
 import android.content.Context
 import android.content.res.Resources
-import android.net.ConnectivityManager
 import android.os.Handler
 import android.os.Looper
 import android.util.ArrayMap
@@ -324,14 +323,14 @@ class StateLayout @JvmOverloads constructor(
             EMPTY -> emptyLayout
             ERROR -> errorLayout
             LOADING -> loadingLayout
-            else -> NO_ID
+            CONTENT -> NO_ID
         }
         if (layoutId == NO_ID) {
             when (status) {
                 ERROR -> throw Resources.NotFoundException("No StateLayout errorLayout is set")
                 EMPTY -> throw Resources.NotFoundException("No StateLayout emptyLayout is set")
                 LOADING -> throw Resources.NotFoundException("No StateLayout loadingLayout is set")
-                else -> throw Resources.NotFoundException("No StateLayout contentView is set")
+                CONTENT -> throw Resources.NotFoundException("No StateLayout contentView is set")
             }
         }
         val view = LayoutInflater.from(context).inflate(layoutId, this, false)
@@ -344,22 +343,6 @@ class StateLayout @JvmOverloads constructor(
      */
     fun setContent(view: View) {
         views[CONTENT] = StatePair(view, null)
-    }
-
-    /**
-     * 判断是否有网络连接
-     */
-    private fun Context?.isNetConnected(): Boolean {
-        if (this != null) {
-            val connectivityManager =
-                getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val networkInfo = connectivityManager.activeNetworkInfo
-            if (networkInfo != null) {
-                @Suppress("DEPRECATION")
-                return networkInfo.isAvailable
-            }
-        }
-        return false
     }
 
     /**
