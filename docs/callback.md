@@ -70,43 +70,16 @@
     }
     ```
 
-这里可以看到onRefresh和onLoading触发的条件一样, 但是他们的函数参数接收者不一样, 他们所代表的的作用也不同.
+`onRefresh`和`onLoading`触发的条件一样, 但是他们的函数参数接收者不一样, 他们所代表的的作用也不同
 
-1. onRefresh 回调中处理加载时其异步任务(例如网络请求)
-1. onLoading 中则处理的是加载视图UI
+- onRefresh 中常见处理异步任务(例如网络请求)
+- onLoading 中常见处理的是加载视图/动画
 
-## 完全自定义缺省页切换
+## 自定义缺省页切换处理
 
-创建StateChangedHandler来取代默认的缺省页切换逻辑, 可以自定义缺省页显示/隐藏动画, 并且可以自定义布局参数(宽高)
+创建`StateChangedHandler`来取代默认的缺省页切换逻辑, 可以自定义缺省页显示/隐藏动画, 并且可以自定义布局参数(宽高)
 
-```kotlin
-/**
- * 缺省页切换处理
- * 提供更丰富的缺省页切换处理, 可以自己决定是删除还是隐藏, 或者动态创建缺省页的布局参数甚至状态切换动画
- */
-open class StateChangedHandler {
-
-    /**
-     * StateLayout添加缺省页
-     * @param container StateLayout
-     * @param state 将被添加缺省页视图对象
-     * @param tag 显示状态传入的tag
-     */
-    open fun onAdd(container: StateLayout, state: View, tag: Any?) {
-        container.addView(state)
-    }
-
-    /**
-     * StateLayout删除缺省页
-     * @param container StateLayout
-     * @param state 将被删除缺省页视图对象
-     * @param tag 显示状态传入的tag
-     */
-    open fun onRemove(container: StateLayout, state: View, tag: Any?) {
-        container.removeView(state)
-    }
-}
-```
+StateChangedHandler默认是removeView/addView, 如果你想改成visibility就可以实现接口自定义处理
 
 可以全部配置或者单例配置
 
