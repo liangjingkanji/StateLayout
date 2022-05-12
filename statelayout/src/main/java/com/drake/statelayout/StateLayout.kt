@@ -113,7 +113,7 @@ class StateLayout @JvmOverloads constructor(
     /** 处理缺省页状态变更 */
     var stateChangedHandler: StateChangedHandler? = null
         get() {
-            return field ?: StateConfig.stateChangedHandler ?: StateChangedHandler()
+            return field ?: StateConfig.stateChangedHandler ?: StateChangedHandler
         }
 
     // </editor-fold>
@@ -259,7 +259,6 @@ class StateLayout @JvmOverloads constructor(
     private fun showStatus(status: Status, tag: Any? = null) {
         if (trigger) stateChanged = true
         if (this.status == status) return
-        this.status = status
         runMain {
             try {
                 val targetStatusView = getStatusView(status, tag)
@@ -267,8 +266,11 @@ class StateLayout @JvmOverloads constructor(
                     it.key != status
                 }.forEach {
                     val statePair = it.value
-                    stateChangedHandler?.onRemove(this, statePair.first, it.key, statePair.second)
+                    if (it.key == this.status) {
+                        stateChangedHandler?.onRemove(this, statePair.first, it.key, statePair.second)
+                    }
                 }
+                this.status = status
                 stateChangedHandler?.onAdd(this, targetStatusView, status, tag)
                 when (status) {
                     EMPTY -> {
