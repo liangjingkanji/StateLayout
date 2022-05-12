@@ -16,24 +16,25 @@
 
 package com.example.statelayout
 
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.drake.engine.base.EngineActivity
+import com.example.statelayout.databinding.ActivityMainBinding
 import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : EngineActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        state.onRefresh {
-            // 一般在这里进行网络请求
+    override fun initView() {
+        binding.state.onRefresh {
+            // 一般这里进行网络请求, 推荐使用 https://github.com/liangjingkanji/Net
             thread {
                 Thread.sleep(2000)
                 showContent()
             }
         }.showLoading()
+    }
+
+    override fun initData() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,10 +44,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_loading -> state.showLoading()
-            R.id.menu_content -> state.showContent()
-            R.id.menu_error -> state.showError(NullPointerException())
-            R.id.menu_empty -> state.showEmpty()
+            R.id.menu_loading -> binding.state.showLoading()
+            R.id.menu_content -> binding.state.showContent()
+            R.id.menu_error -> binding.state.showError(NullPointerException())
+            R.id.menu_empty -> binding.state.showEmpty()
         }
         return true
     }
