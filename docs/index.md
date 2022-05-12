@@ -87,4 +87,4 @@ state.showEmpty()
 state.showError()
 state.showContent()
 ```
-这些`show*()`函数都有一个Any参数, 可以传递任何对象到[生命周期](lifecycle.md)中, 进行定制化展示不同的缺省页
+这些`show*()`函数都有一个Any参数, 可以传递任何对象到[生命周期](callback.md)中, 进行定制化展示不同的缺省页

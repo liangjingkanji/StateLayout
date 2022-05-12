@@ -2,7 +2,9 @@
 
 ### 设置重试Id
 
-添加重试Ids要求你设置了加载中布局, 因为重试本质上是自动调用`showLoading`函数, 该函数要求`loadingLayout`有值才会执行(全局或者单例有一即可).
+点击重试原理是点击你传入的控件ID后自动调用`showLoading()`, 支持ERROR/EMPTY两种状态
+
+默认情况下仅有网络才会显示LOADING缺省页(onRefresh不要求网络), 这是为了避免很快闪过LOADING. 可以自定义点击重试避免这一要求
 
 === "单例设置点击重试Id"
     ```kotlin 
@@ -20,14 +22,9 @@ fun setRetryIds(@IdRes vararg ids: Int): StateLayout
 // 可变参数接收多个点击重试的Id
 ```
 
-通过你设置的Id会自动在错误页面和空布局页面`findViewById`查找到对应Id的控件设置点击事件, 点击事件执行`showLoading`.
-会自动触发`onRefresh/onLoading`回调
-
-> 空页面也同样支持点击重试 <br>
 
 ### 自定义重试
 
-`setRetryIds`函数触发的`onRefresh/onLoading`回调中的it都是Null, 你可以通过这个来区分是否是设置的重试Id触发的, 借此达到监听是用户点击重试还是你自己`showLoading`
+如果你对默认的点击重试不满意, 可以在生命周期方法中自己`setOnClickListener`来配置自动重试
 
-
-更自定义的请见[生命周期](docs/lifecycle.md), 你可以在其缺省页的生命周期回调中获取对应的控件(View)来设置`setOnClickListener`设置点击事件来响应你的任何逻辑
+更自定义的请见[生命周期](docs/callback.md), 你可以在其缺省页的生命周期回调中获取对应的控件(View)来设置`setOnClickListener`设置点击事件来响应你的任何逻辑

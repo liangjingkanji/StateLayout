@@ -20,6 +20,9 @@ package com.drake.statelayout
 
 import android.content.Context
 import android.content.res.Resources
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.ArrayMap
@@ -52,7 +55,6 @@ class StateLayout @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val views = ArrayMap<Status, StatePair>()
-    private var refresh = true
     private var stateChanged = false
     private var trigger = false
 
@@ -190,13 +192,20 @@ class StateLayout @JvmOverloads constructor(
     // <editor-fold desc="显示缺省页">
 
     /**
-     * 有网则显示加载中, 无网络直接显示错误, 会触发[onLoading]的函数参数
+     * 默认情况下每次执行都会反复回调[onLoading](有网情况), 指定[requireNetworking]为false可以无网络回调[onLoading]
+     * 但[onRefresh]不要求有网络
+     *
      * @param tag 传递任意对象给[onLoading]函数
      * @param silent 仅执行[onRefresh], 不会显示加载中布局, 也不执行[onLoading]
      * @param refresh 是否回调[onRefresh]
+     * @param requireNetworking 要求有网络情况下才触发显示[LOADING]加载缺省页, 不影响回调[onRefresh]
      */
-    fun showLoading(tag: Any? = null, silent: Boolean = false, refresh: Boolean = true) {
-        this.refresh = refresh
+    fun showLoading(
+        tag: Any? = null,
+        silent: Boolean = false,
+        refresh: Boolean = true,
+        requireNetworking: Boolean = true
+    ) {
         if (silent && refresh) {
             onRefresh?.invoke(this, tag)
             return
@@ -205,7 +214,8 @@ class StateLayout @JvmOverloads constructor(
             onLoading?.invoke(getStatusView(LOADING, tag), tag)
             return
         }
-        showStatus(LOADING, tag)
+        if (!requireNetworking || isNetworking()) showStatus(LOADING, tag)
+        if (refresh) onRefresh?.invoke(this, tag)
     }
 
     /**
@@ -231,6 +241,7 @@ class StateLayout @JvmOverloads constructor(
     fun showContent(tag: Any? = null) {
         if (trigger && stateChanged) return
         showStatus(CONTENT, tag)
+        loaded = true
     }
 
     // </editor-fold>
@@ -281,14 +292,8 @@ class StateLayout @JvmOverloads constructor(
                 when (status) {
                     EMPTY -> onEmpty?.invoke(targetStatusView, tag)
                     ERROR -> onError?.invoke(targetStatusView, tag)
-                    LOADING -> {
-                        onLoading?.invoke(targetStatusView, tag)
-                        if (refresh) onRefresh?.invoke(this, tag)
-                    }
-                    CONTENT -> {
-                        loaded = true
-                        onContent?.invoke(targetStatusView, tag)
-                    }
+                    LOADING -> onLoading?.invoke(targetStatusView, tag)
+                    CONTENT -> onContent?.invoke(targetStatusView, tag)
                 }
             } catch (e: Exception) {
                 Log.e(javaClass.simpleName, "", e)
@@ -336,6 +341,25 @@ class StateLayout @JvmOverloads constructor(
      */
     fun setContent(view: View) {
         views[CONTENT] = StatePair(view, null)
+    }
+
+    /**
+     * 是否处于联网中
+     */
+    fun isNetworking(): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val networkCapabilities = connectivityManager.activeNetwork ?: return false
+            val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+            when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } else {
+            connectivityManager.activeNetworkInfo?.isConnected == true
+        }
     }
 
     /**
