@@ -24,6 +24,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.ArrayMap
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -258,6 +259,8 @@ class StateLayout @JvmOverloads constructor(
     private fun showStatus(status: Status, tag: Any? = null) {
         if (trigger) stateChanged = true
         if (this.status == status) return
+        val previousStatus = this.status
+        this.status = status
         runMain {
             try {
                 val targetStatusView = getStatusView(status, tag)
@@ -265,40 +268,30 @@ class StateLayout @JvmOverloads constructor(
                     it.key != status
                 }.forEach {
                     val statePair = it.value
-                    if (it.key == this.status) {
+                    if (it.key == previousStatus) {
                         stateChangedHandler?.onRemove(this, statePair.first, it.key, statePair.second)
                     }
                 }
-                this.status = status
                 stateChangedHandler?.onAdd(this, targetStatusView, status, tag)
+                if (status == EMPTY || status == ERROR) {
+                    retryIds?.forEach {
+                        targetStatusView.findViewById<View>(it)?.throttleClick { showLoading() }
+                    }
+                }
                 when (status) {
-                    EMPTY -> {
-                        retryIds?.forEach {
-                            targetStatusView.findViewById<View>(it)?.throttleClick {
-                                showLoading()
-                            }
-                        }
-                        onEmpty?.invoke(targetStatusView, tag)
-                    }
-                    ERROR -> {
-                        retryIds?.forEach {
-                            targetStatusView.findViewById<View>(it)?.throttleClick {
-                                showLoading()
-                            }
-                        }
-                        onError?.invoke(targetStatusView, tag)
-                    }
+                    EMPTY -> onEmpty?.invoke(targetStatusView, tag)
+                    ERROR -> onError?.invoke(targetStatusView, tag)
                     LOADING -> {
                         onLoading?.invoke(targetStatusView, tag)
                         if (refresh) onRefresh?.invoke(this, tag)
                     }
-                    else -> {
+                    CONTENT -> {
                         loaded = true
                         onContent?.invoke(targetStatusView, tag)
                     }
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e(javaClass.simpleName, "", e)
             }
         }
     }
