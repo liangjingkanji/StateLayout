@@ -1,11 +1,7 @@
 <p align="center"><img src="https://i.loli.net/2021/08/14/kqTVfluhDo3tAHU.gif" width="30%"/></p>
 
-首先明确的就是StateLayout布局包裹的内容才能控制其显示缺省页, 所以在我们创建缺省页的时候一定要包裹住一个内容作为内容页面
+StateLayout布局包裹的内容才能控制其显示缺省页
 
-<br>
-
-1. StateLayout继承自FrameLayout
-1. StateLayout不能通过代码包裹ViewPager中的Fragment, 因为其ViewPager的视图容器无法被替换
 <br>
 
 ## 创建缺省页
@@ -37,6 +33,7 @@
     state() // 该函数可以在 Activity/Fragment中使用, 或者 View.state()
     ```
 
+> 比如ViewPager中的Fragment不能使用`state()`创建, 因为其ViewPager的视图容器无法被替换
 <br>
 
 ## 设置缺省页
