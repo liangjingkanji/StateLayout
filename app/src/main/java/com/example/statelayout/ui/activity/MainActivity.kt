@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.statelayout
+package com.example.statelayout.ui.activity
 
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import com.drake.engine.base.EngineActivity
+import com.example.statelayout.R
 import com.example.statelayout.databinding.ActivityMainBinding
 import kotlin.concurrent.thread
 
@@ -48,6 +50,7 @@ class MainActivity : EngineActivity<ActivityMainBinding>(R.layout.activity_main)
             R.id.menu_content -> binding.state.showContent()
             R.id.menu_error -> binding.state.showError(NullPointerException())
             R.id.menu_empty -> binding.state.showEmpty()
+            R.id.menu_skeleton -> startActivity(Intent(this, SkeletonAnimationActivity::class.java))
         }
         return true
     }

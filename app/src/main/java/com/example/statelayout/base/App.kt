@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.example.statelayout
+package com.example.statelayout.base
 
 import android.app.Application
 import com.drake.statelayout.StateConfig
+import com.drake.statelayout.handler.FadeStateChangedHandler
+import com.example.statelayout.R
 
 class App : Application() {
     override fun onCreate() {
@@ -27,7 +29,7 @@ class App : Application() {
             emptyLayout = R.layout.layout_empty
             errorLayout = R.layout.layout_error
             loadingLayout = R.layout.layout_loading
-
+            stateChangedHandler = FadeStateChangedHandler()
             setRetryIds(R.id.msg, R.id.iv)
         }
     }

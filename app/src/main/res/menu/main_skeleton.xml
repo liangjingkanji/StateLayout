@@ -28,6 +28,6 @@
         android:id="@+id/menu_empty"
         android:title="空数据" />
     <item
-        android:id="@+id/menu_skeleton"
-        android:title="骨骼动画" />
+        android:id="@+id/menu_animation"
+        android:title="进度动画" />
 </menu>
