@@ -10,15 +10,8 @@
 
 ## 创建缺省页
 
-创建缺省页支持两种方式.
-Activity/Fragment/View都可以使用函数`state`来创建StateLayout, 代码创建属于`addView`的替换视图对象的原理, 其过度使用可能容易造成视图参数丢失, 不推荐频繁使用.
+创建缺省页支持两种方式
 
-推荐在布局中创建缺省页
-
-=== "代码包裹"
-    ```kotlin
-    state() // 该函数可以在 Activity/Fragment中使用, 或者 View.state()
-    ```
 === "布局声明"
     ```xml
     <com.drake.statelayout.StateLayout
@@ -38,8 +31,11 @@ Activity/Fragment/View都可以使用函数`state`来创建StateLayout, 代码�
     
     </com.drake.statelayout.StateLayout>
     ```
-
-TextView即我们假设的内容页
+=== "代码包裹"
+    但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
+    ```kotlin
+    state() // 该函数可以在 Activity/Fragment中使用, 或者 View.state()
+    ```
 
 <br>
 

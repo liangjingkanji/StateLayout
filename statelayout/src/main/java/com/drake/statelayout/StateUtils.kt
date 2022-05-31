@@ -30,7 +30,7 @@ import androidx.viewpager.widget.ViewPager
 
 /**
  * 创建一个缺省页来包裹Activity
- * 推荐还是在XML中创建[StateLayout]
+ * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
 fun Activity.state(): StateLayout {
     val view = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
@@ -39,7 +39,7 @@ fun Activity.state(): StateLayout {
 
 /**
  * 创建一个缺省页来包裹Fragment
- * 推荐还是在XML中创建[StateLayout]
+ * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
 fun Fragment.state(): StateLayout {
     val stateLayout = view!!.state()
@@ -59,7 +59,7 @@ fun Fragment.state(): StateLayout {
 
 /**
  * 创建一个缺省页来包裹视图
- * 推荐还是在XML中创建[StateLayout]
+ * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
 fun View.state(): StateLayout {
     val parent = parent as ViewGroup
