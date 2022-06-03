@@ -4,7 +4,11 @@
 
 <p align="center"><strong>整个应用的缺省页</strong></p><br>
 
-<p align="center"><a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a> | <a href="https://statelayout-1252757332.cos-website.ap-guangzhou.myqcloud.com">备用访问</a></p>
+<p align="center">
+<a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a>
+| <a href="https://statelayout-1252757332.cos-website.ap-guangzhou.myqcloud.com">备用访问</a>
+| <a href="https://github.com/liangjingkanji/StateLayout/releases/download/1.3.4/state-layout-sample.apk">下载体验</a>
+</p>
 
 <p align="center">
 <a href="https://jitpack.io/#liangjingkanji/StateLayout"><img src="https://jitpack.io/v/liangjingkanji/StateLayout.svg"/></a>
@@ -72,7 +76,7 @@ dependencyResolutionManagement {
 然后在 module 的 build.gradle 添加依赖框架
 
 ```groovy
-implementation 'com.github.liangjingkanji:StateLayout:1.3.3'
+implementation 'com.github.liangjingkanji:StateLayout:1.3.4'
 ```
 
 <br>
