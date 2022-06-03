@@ -70,7 +70,7 @@ class StateLayout @JvmOverloads constructor(
         get() = field ?: StateConfig.onLoading
     private var onRefresh: (StateLayout.(tag: Any?) -> Unit)? = null
 
-    /** 当前缺省页是否加载成功过, 即是否执行过[showContent] */
+    /** 当前缺省页是否加载成功过, 即是否执行过[showContent], 如果再次执行[showError]会导致该属性为false */
     var loaded = false
 
     /** 当前缺省页状态[Status] */
@@ -233,9 +233,9 @@ class StateLayout @JvmOverloads constructor(
      */
     fun refreshing(tag: Any? = null, requireNetworking: Boolean = true) {
         if (loaded) {
-            showLoading(tag, requireNetworking = requireNetworking)
-        } else {
             refresh()
+        } else {
+            showLoading(tag, requireNetworking = requireNetworking)
         }
     }
 
@@ -252,6 +252,7 @@ class StateLayout @JvmOverloads constructor(
      * @param tag 传递任意对象给[onError]函数
      */
     fun showError(tag: Any? = null) {
+        loaded = false
         showStatus(ERROR, tag)
     }
 
