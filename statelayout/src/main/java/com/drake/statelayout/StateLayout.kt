@@ -219,6 +219,27 @@ class StateLayout @JvmOverloads constructor(
     }
 
     /**
+     * 静默刷新, 仅触发[onRefresh], 不会改变缺省页状态
+     */
+    fun refresh() {
+        showLoading(silent = true)
+    }
+
+    /**
+     * 初次加载使用[showLoading], 加载成功过一次以后只会静默加载[refresh]
+     *
+     * @param tag 传递任意对象给[onLoading]函数
+     * @param requireNetworking 要求有网络情况下才触发显示[LOADING]加载缺省页, 不影响回调[onRefresh]
+     */
+    fun refreshing(tag: Any? = null, requireNetworking: Boolean = true) {
+        if (loaded) {
+            showLoading(tag, requireNetworking = requireNetworking)
+        } else {
+            refresh()
+        }
+    }
+
+    /**
      * 显示空页, 会触发[onEmpty]的函数参数
      * @param tag 传递任意对象给[onEmpty]函数
      */
