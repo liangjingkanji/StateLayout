@@ -22,13 +22,13 @@ import android.view.MenuItem
 import com.drake.engine.base.EngineActivity
 import com.example.statelayout.R
 import com.example.statelayout.databinding.ActivityMainBinding
-import com.example.statelayout.handler.LestOnceAnimationStateChangedHandler
+import com.example.statelayout.handler.LeastAnimationStateChangedHandler
 import kotlin.concurrent.thread
 
 class SkeletonAnimationActivity : EngineActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun initView() {
-        binding.state.stateChangedHandler = LestOnceAnimationStateChangedHandler() // 全局配置可只需要一次
+        binding.state.stateChangedHandler = LeastAnimationStateChangedHandler() // 全局配置可只需要一次
         binding.state.onRefresh {
             // 一般这里进行网络请求, 推荐使用 https://github.com/liangjingkanji/Net
             thread {

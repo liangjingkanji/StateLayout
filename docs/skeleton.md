@@ -9,7 +9,7 @@
 /**
  * 适用于骨骼图动画, 能保证动画至少完整执行一次动画, 避免屏幕闪烁
  */
-open class LestOnceAnimationStateChangedHandler : StateChangedHandler {
+open class LeastAnimationStateChangedHandler : StateChangedHandler {
 
     /** 加载状态开始时间 */
     private var loadingStartTime = 0L

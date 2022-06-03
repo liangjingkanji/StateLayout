@@ -38,7 +38,7 @@
 - [x] 快速配置点击重试
 - [x] 监听缺省页回调
 - [x] 自定义动画/布局
-- [x] [骨骼动画](https://github.com/liangjingkanji/StateLayout/blob/14fb37bbafc7f45000e03199fa8b8c597b364755/app/src/main/java/com/example/statelayout/handler/LestOnceAnimationStateChangedHandler.kt)
+- [x] [骨骼动画](https://github.com/liangjingkanji/StateLayout/blob/14fb37bbafc7f45000e03199fa8b8c597b364755/app/src/main/java/com/example/statelayout/handler/LeastAnimationStateChangedHandler.kt)
 - [x] 传递标签
 - [x] 自定义缺省页切换处理
 - [x] 异步线程使用
