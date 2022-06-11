@@ -370,17 +370,21 @@ class StateLayout @JvmOverloads constructor(
      */
     fun isNetworking(): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val networkCapabilities = connectivityManager.activeNetwork ?: return false
-            val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-            when {
-                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                else -> false
+        return try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val network = connectivityManager.activeNetwork ?: return false
+                val actNw = connectivityManager.getNetworkCapabilities(network) ?: return false
+                when {
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                    else -> false
+                }
+            } else {
+                connectivityManager.activeNetworkInfo?.isConnected == true
             }
-        } else {
-            connectivityManager.activeNetworkInfo?.isConnected == true
+        } catch (e: Exception) {
+            true
         }
     }
 
