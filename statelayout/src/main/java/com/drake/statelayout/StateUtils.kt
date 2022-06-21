@@ -32,17 +32,17 @@ import androidx.viewpager.widget.ViewPager
  * 创建一个缺省页来包裹Activity
  * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
-fun Activity.state(): StateLayout {
+fun Activity.stateCreate(): StateLayout {
     val view = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
-    return view.state()
+    return view.stateCreate()
 }
 
 /**
  * 创建一个缺省页来包裹Fragment
  * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
-fun Fragment.state(): StateLayout {
-    val stateLayout = requireView().state()
+fun Fragment.stateCreate(): StateLayout {
+    val stateLayout = requireView().stateCreate()
 
     viewLifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
 
@@ -61,7 +61,7 @@ fun Fragment.state(): StateLayout {
  * 创建一个缺省页来包裹视图
  * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
-fun View.state(): StateLayout {
+fun View.stateCreate(): StateLayout {
     val parent = parent as ViewGroup
     if (parent is ViewPager || parent is RecyclerView) {
         throw UnsupportedOperationException("You should using StateLayout wrap [ $this ] in layout when parent is ViewPager or RecyclerView")
@@ -86,3 +86,12 @@ fun View.state(): StateLayout {
     stateLayout.setContent(this)
     return stateLayout
 }
+
+@Deprecated("命名规范", ReplaceWith("stateCreate()"))
+fun Activity.state(): StateLayout = stateCreate()
+
+@Deprecated("命名规范", ReplaceWith("stateCreate()"))
+fun Fragment.state(): StateLayout = stateCreate()
+
+@Deprecated("命名规范", ReplaceWith("stateCreate()"))
+fun View.state(): StateLayout = stateCreate()

@@ -30,10 +30,10 @@ StateLayout布局包裹的内容才能控制其显示缺省页
 === "代码包裹"
     但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
     ```kotlin
-    state() // 该函数可以在 Activity/Fragment中使用, 或者 View.state()
+    createState() // 该函数可以在 Activity/Fragment中使用, 或者 View.createState()
     ```
 
-> 比如ViewPager中的Fragment不能使用`state()`创建, 因为其ViewPager的视图容器无法被替换
+> 比如ViewPager中的Fragment不能使用`createState()`创建, 因为其ViewPager的视图容器无法被替换
 <br>
 
 ## 设置缺省页
