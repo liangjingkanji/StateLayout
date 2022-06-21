@@ -42,9 +42,9 @@ fun Activity.state(): StateLayout {
  * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
 fun Fragment.state(): StateLayout {
-    val stateLayout = view!!.state()
+    val stateLayout = requireView().state()
 
-    lifecycle.addObserver(object : LifecycleObserver {
+    viewLifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun removeState() {
