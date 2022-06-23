@@ -12,12 +12,12 @@ interface StateChangedHandler {
     companion object DEFAULT : StateChangedHandler
 
     /**
-     * StateLayout删除缺省页, 此方法比[onRemove]先执行
+     * StateLayout删除缺省页, 此方法比[onAdd]先执行
      * @param container StateLayout
      * @param state 将被删除缺省页视图对象
      * @param tag 显示状态传入的tag
      */
-    open fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
+    fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
         if (container.status != status) container.removeView(state)
     }
 
@@ -27,7 +27,7 @@ interface StateChangedHandler {
      * @param state 将被添加缺省页视图对象
      * @param tag 显示状态传入的tag
      */
-    open fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
+    fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
         if (state.parent == null) container.addView(state)
     }
 }
