@@ -33,6 +33,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import com.drake.statelayout.StateConfig.setRetryIds
 import com.drake.statelayout.Status.*
 
 /**
@@ -72,6 +73,13 @@ class StateLayout @JvmOverloads constructor(
 
     /** 当前缺省页是否加载成功过, 即是否执行过[showContent], 如果再次执行[showError]会导致该属性为false */
     var loaded = false
+
+    /**
+     * 设置[setRetryIds]点击重试要求网络可用才会显示加载缺省,
+     * 会回调[StateLayout.onRefresh]但不会回调[StateLayout.onLoading]
+     * 为避免无网络情况下点击重试导致闪屏
+     */
+    var isNetworkingRetry = StateConfig.isNetworkingRetry
 
     /** 当前缺省页状态[Status] */
     var status = CONTENT
@@ -305,7 +313,9 @@ class StateLayout @JvmOverloads constructor(
                 stateChangedHandler?.onAdd(this, targetStatusView, status, tag)
                 if (status == EMPTY || status == ERROR) {
                     retryIds?.forEach {
-                        targetStatusView.findViewById<View>(it)?.throttleClick { showLoading() }
+                        targetStatusView.findViewById<View>(it)?.throttleClick {
+                            showLoading(silent = isNetworkingRetry && !isNetworking())
+                        }
                     }
                 }
                 when (status) {

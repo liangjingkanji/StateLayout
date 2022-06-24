@@ -52,6 +52,13 @@ object StateConfig {
     var stateChangedHandler: StateChangedHandler? = null
 
     /**
+     * 设置[setRetryIds]点击重试要求网络可用才会显示加载缺省,
+     * 会回调[StateLayout.onRefresh]但不会回调[StateLayout.onLoading]
+     * 为避免无网络情况下点击重试导致闪屏
+     */
+    var isNetworkingRetry = true
+
+    /**
      * 全局的空缺省页显示回调
      */
     @JvmStatic
