@@ -192,19 +192,17 @@ class StateLayout @JvmOverloads constructor(
     // <editor-fold desc="显示缺省页">
 
     /**
-     * 默认情况下每次执行都会反复回调[onLoading](有网情况), 指定[requireNetworking]为false可以无网络回调[onLoading]
+     * 默认情况下每次执行都会反复回调[onLoading](有网情况)
      * 但[onRefresh]不要求有网络
      *
      * @param tag 传递任意对象给[onLoading]函数
      * @param silent 仅执行[onRefresh], 不会显示加载中布局, 也不执行[onLoading]
      * @param refresh 是否回调[onRefresh]
-     * @param requireNetworking 要求有网络情况下才触发显示[LOADING]加载缺省页, 不影响回调[onRefresh]
      */
     fun showLoading(
         tag: Any? = null,
         silent: Boolean = false,
         refresh: Boolean = true,
-        requireNetworking: Boolean = true
     ) {
         if (silent && refresh) {
             onRefresh?.invoke(this, tag)
@@ -214,7 +212,7 @@ class StateLayout @JvmOverloads constructor(
             onLoading?.invoke(getStatusView(LOADING, tag), tag)
             return
         }
-        if (!requireNetworking || isNetworking()) showStatus(LOADING, tag)
+        showStatus(LOADING, tag)
         if (refresh) onRefresh?.invoke(this, tag)
     }
 
@@ -229,13 +227,12 @@ class StateLayout @JvmOverloads constructor(
      * 初次加载使用[showLoading], 加载成功过一次以后只会静默加载[refresh]
      *
      * @param tag 传递任意对象给[onLoading]函数
-     * @param requireNetworking 要求有网络情况下才触发显示[LOADING]加载缺省页, 不影响回调[onRefresh]
      */
-    fun refreshing(tag: Any? = null, requireNetworking: Boolean = true) {
+    fun refreshing(tag: Any? = null) {
         if (loaded) {
             refresh()
         } else {
-            showLoading(tag, requireNetworking = requireNetworking)
+            showLoading(tag)
         }
     }
 
