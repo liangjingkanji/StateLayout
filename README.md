@@ -6,7 +6,7 @@
 
 <p align="center">
 <a href="http://liangjingkanji.github.io/StateLayout/">使用文档</a>
-| <a href="https://statelayout-1252757332.cos-website.ap-guangzhou.myqcloud.com">备用访问</a>
+| <a href="https://github.com/liangjingkanji/document/blob/master/visit-pages.md">无法访问?</a>
 | <a href="https://github.com/liangjingkanji/StateLayout/releases/download/1.3.8/state-layout-sample.apk">下载体验</a>
 </p>
 
