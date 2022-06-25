@@ -34,14 +34,13 @@
 
 - [x] 全局/局部缺省页
 - [x] 布局或代码声明
-- [x] 全局/单例配置
 - [x] 快速配置点击重试
 - [x] 监听缺省页回调
 - [x] 自定义动画/布局
 - [x] [骨骼动画](https://github.com/liangjingkanji/StateLayout/blob/14fb37bbafc7f45000e03199fa8b8c597b364755/app/src/main/java/com/example/statelayout/handler/LeastAnimationStateChangedHandler.kt)
 - [x] 传递标签
-- [x] 自定义缺省页切换处理
 - [x] 异步线程使用
+- [x] 自定义缺省页切换处理
 - [x] 配合[BRV](https://github.com/liangjingkanji/BRV/)使用自动化显示列表缺省页 (可选)
 - [x] 配合[Net](https://github.com/liangjingkanji/Net/)网络请求自动化显示缺省页 (可选)
 
