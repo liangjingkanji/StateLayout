@@ -91,10 +91,10 @@ object StateConfig {
     }
 
     /**
-     * 全局的重试IdRes
      * 会为所有[StateLayout.emptyLayout]/[StateLayout.errorLayout]中的指定Id的视图对象添加一个点击事件
-     * 该点击事件会触发[StateLayout.showLoading]和[StateLayout.onRefresh]函数
-     * 点击500ms内防抖动
+     * 该点击事件会触发[StateLayout.showLoading], 同时500ms内防抖动
+     *
+     * @see isNetworkingRetry 点击重试是否检查网络
      */
     @JvmStatic
     fun setRetryIds(@IdRes vararg ids: Int) {

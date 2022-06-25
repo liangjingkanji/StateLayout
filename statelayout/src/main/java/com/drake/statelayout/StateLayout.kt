@@ -33,6 +33,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import com.drake.statelayout.StateConfig.isNetworkingRetry
 import com.drake.statelayout.StateConfig.setRetryIds
 import com.drake.statelayout.Status.*
 
@@ -273,8 +274,10 @@ class StateLayout @JvmOverloads constructor(
     // </editor-fold>
 
     /**
-     * 为错误页/空页中的指定Id控件设置点击事件, 点击会触发[showLoading]
-     * 默认点击500ms内防抖动
+     * 会为所有[StateLayout.emptyLayout]/[StateLayout.errorLayout]中的指定Id的视图对象添加一个点击事件
+     * 该点击事件会触发[StateLayout.showLoading], 同时500ms内防抖动
+     *
+     * @see isNetworkingRetry 点击重试是否检查网络
      */
     fun setRetryIds(@IdRes vararg ids: Int) = apply {
         retryIds = ids
@@ -374,7 +377,7 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 是否处于联网中
      */
-    fun isNetworking(): Boolean {
+    private fun isNetworking(): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
