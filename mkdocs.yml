@@ -40,6 +40,7 @@ nav:
   - 全局配置: global.md
   - 传递标签: transfer.md
   - 点击重试: retry.md
+  - 多状态: multi-state.md
   - 动画/布局: animation.md
   - 骨骼动画: skeleton.md
   - 自动显示: extension.md
