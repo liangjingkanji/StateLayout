@@ -29,8 +29,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 
 /**
- * 创建一个缺省页来包裹Activity
- * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
+ * 创建一个缺省页来包裹Activity, 请注意反复调用本方法会反复创建[StateLayout]导致发生问题
+ * 本方法不推荐使用, 建议在Xml布局中创建[StateLayout], 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
 fun Activity.stateCreate(): StateLayout {
     val view = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
@@ -38,8 +38,8 @@ fun Activity.stateCreate(): StateLayout {
 }
 
 /**
- * 创建一个缺省页来包裹Fragment
- * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
+ * 创建一个缺省页来包裹Fragment, 请注意反复调用本方法会反复创建[StateLayout]导致发生问题
+ * 本方法不推荐使用, 建议在Xml布局中创建[StateLayout], 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
 fun Fragment.stateCreate(): StateLayout {
     val stateLayout = requireView().stateCreate()
@@ -58,8 +58,8 @@ fun Fragment.stateCreate(): StateLayout {
 }
 
 /**
- * 创建一个缺省页来包裹视图
- * 但是更建议在XML布局中创建, 可保持代码可读性且避免不必要的问题发生, 性能也更优
+ * 创建一个缺省页来包裹视图, 请注意反复调用本方法会反复创建[StateLayout]导致发生问题
+ * 本方法不推荐使用, 建议在Xml布局中创建[StateLayout], 可保持代码可读性且避免不必要的问题发生, 性能也更优
  */
 fun View.stateCreate(): StateLayout {
     val parent = parent as ViewGroup
@@ -86,12 +86,3 @@ fun View.stateCreate(): StateLayout {
     stateLayout.setContent(this)
     return stateLayout
 }
-
-@Deprecated("命名规范", ReplaceWith("stateCreate()"))
-fun Activity.state(): StateLayout = stateCreate()
-
-@Deprecated("命名规范", ReplaceWith("stateCreate()"))
-fun Fragment.state(): StateLayout = stateCreate()
-
-@Deprecated("命名规范", ReplaceWith("stateCreate()"))
-fun View.state(): StateLayout = stateCreate()
