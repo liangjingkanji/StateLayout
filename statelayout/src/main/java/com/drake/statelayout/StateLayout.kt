@@ -56,7 +56,7 @@ class StateLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val views = ArrayMap<Status, StatePair>()
+    private val statusContainer = ArrayMap<Status, StatusInfo>()
     private var stateChanged = false
     private var trigger = false
 
@@ -145,7 +145,7 @@ class StateLayout @JvmOverloads constructor(
         if (childCount > 1 || childCount == 0) {
             throw UnsupportedOperationException("StateLayout only have one child view")
         }
-        if (views.size == 0) {
+        if (statusContainer.size == 0) {
             val view = getChildAt(0)
             setContent(view)
         }
@@ -304,19 +304,19 @@ class StateLayout @JvmOverloads constructor(
         runMain {
             try {
                 val targetStatusView = getStatusView(status, tag)
-                views.filter {
+                statusContainer.filter {
                     it.key != status
                 }.forEach {
-                    val statePair = it.value
+                    val statusBundle = it.value
                     if (it.key == previousStatus) {
-                        stateChangedHandler?.onRemove(this, statePair.first, it.key, statePair.second)
+                        stateChangedHandler?.onRemove(this, statusBundle.view, it.key, statusBundle.tag)
                     }
                 }
                 stateChangedHandler?.onAdd(this, targetStatusView, status, tag)
                 if (status == EMPTY || status == ERROR) {
                     retryIds?.forEach {
                         targetStatusView.findViewById<View>(it)?.throttleClick {
-                            showLoading(silent = isNetworkingRetry && !isNetworking())
+                            showLoading(tag = statusContainer[LOADING]?.tag, silent = isNetworkingRetry && !isNetworking())
                         }
                     }
                 }
@@ -336,7 +336,7 @@ class StateLayout @JvmOverloads constructor(
      * 删除指定的缺省页
      */
     private fun removeStatus(status: Status) {
-        views.remove(status)
+        statusContainer.remove(status)
     }
 
     /**
@@ -344,9 +344,9 @@ class StateLayout @JvmOverloads constructor(
      */
     @Throws(NullPointerException::class)
     private fun getStatusView(status: Status, tag: Any?): View {
-        views[status]?.let {
-            it.second = tag
-            return it.first
+        statusContainer[status]?.let {
+            it.tag = tag
+            return it.view
         }
         val layoutId = when (status) {
             EMPTY -> emptyLayout
@@ -363,7 +363,7 @@ class StateLayout @JvmOverloads constructor(
             }
         }
         val view = LayoutInflater.from(context).inflate(layoutId, this, false)
-        views[status] = StatePair(view, tag)
+        statusContainer[status] = StatusInfo(view, tag)
         return view
     }
 
@@ -371,7 +371,7 @@ class StateLayout @JvmOverloads constructor(
      * 标记视图为内容布局, 本函数为其他框架进行热插拔适配使用, 一般情况开发者不使用
      */
     fun setContent(view: View) {
-        views[CONTENT] = StatePair(view, null)
+        statusContainer[CONTENT] = StatusInfo(view, null)
     }
 
     /**
