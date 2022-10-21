@@ -6,6 +6,7 @@ import android.view.View
 import com.drake.statelayout.StateChangedHandler
 import com.drake.statelayout.StateLayout
 import com.drake.statelayout.Status
+import java.lang.ref.WeakReference
 
 /**
  * 切换状态时使用渐变透明动画过渡
@@ -13,10 +14,10 @@ import com.drake.statelayout.Status
  */
 open class FadeStateChangedHandler(var duration: Long = 400) : StateChangedHandler {
 
-    private var stateLayout: StateLayout? = null
+    private var stateLayout: WeakReference<StateLayout> = WeakReference(null)
 
     override fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
-        if (container != stateLayout && container.status == Status.LOADING) {
+        if (container != stateLayout.get() && container.status == Status.LOADING) {
             return super.onRemove(container, state, status, tag)
         }
         state.animate().setDuration(duration).alpha(0f).setListener(object : AnimatorListenerAdapter() {
@@ -29,8 +30,8 @@ open class FadeStateChangedHandler(var duration: Long = 400) : StateChangedHandl
 
     override fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
         // 初次加载不应用动画
-        if (container != stateLayout && container.status == Status.LOADING) {
-            stateLayout = container
+        if (container != stateLayout.get() && container.status == Status.LOADING) {
+            stateLayout = WeakReference(container)
             return super.onAdd(container, state, status, tag)
         }
         state.alpha = 0f
