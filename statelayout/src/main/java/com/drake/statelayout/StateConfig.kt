@@ -49,7 +49,7 @@ object StateConfig {
 
     /** 处理缺省页状态变更 */
     @JvmStatic
-    var stateChangedHandler: StateChangedHandler? = null
+    var stateChangedHandler: StateChangedHandler = StateChangedHandler
 
     /**
      * 设置[setRetryIds]点击重试要求网络可用才会显示加载缺省,

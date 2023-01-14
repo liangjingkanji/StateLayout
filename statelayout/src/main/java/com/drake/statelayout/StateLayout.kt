@@ -122,10 +122,7 @@ class StateLayout @JvmOverloads constructor(
         }
 
     /** 处理缺省页状态变更 */
-    var stateChangedHandler: StateChangedHandler? = null
-        get() {
-            return field ?: StateConfig.stateChangedHandler ?: StateChangedHandler
-        }
+    var stateChangedHandler: StateChangedHandler = StateConfig.stateChangedHandler
 
     // </editor-fold>
 
@@ -309,10 +306,10 @@ class StateLayout @JvmOverloads constructor(
                 }.forEach {
                     val statusBundle = it.value
                     if (it.key == previousStatus) {
-                        stateChangedHandler?.onRemove(this, statusBundle.view, it.key, statusBundle.tag)
+                        stateChangedHandler.onRemove(this, statusBundle.view, it.key, statusBundle.tag)
                     }
                 }
-                stateChangedHandler?.onAdd(this, targetStatusView, status, tag)
+                stateChangedHandler.onAdd(this, targetStatusView, status, tag)
                 if (status == EMPTY || status == ERROR) {
                     retryIds?.forEach {
                         targetStatusView.findViewById<View>(it)?.throttleClick {
