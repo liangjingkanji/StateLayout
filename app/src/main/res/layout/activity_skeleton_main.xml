@@ -15,6 +15,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
 
@@ -22,6 +23,7 @@
         android:id="@+id/state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:loading_layout="@layout/layout_loading_skeleton"
         tools:context="com.example.statelayout.ui.activity.MainActivity">
 
         <TextView

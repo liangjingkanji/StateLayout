@@ -21,11 +21,11 @@ import android.view.Menu
 import android.view.MenuItem
 import com.drake.engine.base.EngineActivity
 import com.example.statelayout.R
-import com.example.statelayout.databinding.ActivityMainBinding
+import com.example.statelayout.databinding.ActivitySkeletonMainBinding
 import com.example.statelayout.handler.LeastAnimationStateChangedHandler
 import kotlin.concurrent.thread
 
-class SkeletonAnimationActivity : EngineActivity<ActivityMainBinding>(R.layout.activity_main) {
+class SkeletonAnimationActivity : EngineActivity<ActivitySkeletonMainBinding>(R.layout.activity_skeleton_main) {
 
     override fun initView() {
         binding.state.stateChangedHandler = LeastAnimationStateChangedHandler() // 全局配置可只需要一次
