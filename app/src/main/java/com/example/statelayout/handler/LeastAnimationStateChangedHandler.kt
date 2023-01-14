@@ -42,23 +42,27 @@ open class LeastAnimationStateChangedHandler(var leastDuration: Long? = null) :
             val animation = state.findViewById<LottieAnimationView>(R.id.lottie)
             animation?.addAnimatorUpdateListener {
                 val duration = System.currentTimeMillis() - loadingStartTime
-                if (duration >= leastDuration ?: it.duration) {
+                if (duration >= (leastDuration ?: it.duration)) {
                     animationPlaying = false
                     animation.cancelAnimation()
                     animation.removeAllUpdateListeners()
-                    container.removeAllViews()
-                    next?.let { state -> if (state.parent == null) container.addView(state) }
+                    for (i in 0 until container.childCount) {
+                        container.getChildAt(i).visibility = View.GONE
+                    }
+                    next?.let { state ->
+                        StateChangedHandler.onAdd(container, state, status, tag)
+                    }
                 }
             }
         } else {
-            StateChangedHandler.onRemove(container, state, status, tag)
+            super.onRemove(container, state, status, tag)
         }
     }
 
     override fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
         next = state
         if (animationPlaying) return
-        super.onAdd(container, state, status, tag)
+        StateChangedHandler.onAdd(container, state, status, tag)
         if (status == Status.LOADING) {
             loadingStartTime = System.currentTimeMillis()
             state.findViewById<LottieAnimationView>(R.id.lottie)?.let {

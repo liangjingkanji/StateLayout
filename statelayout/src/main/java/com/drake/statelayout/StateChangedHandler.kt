@@ -18,7 +18,9 @@ interface StateChangedHandler {
      * @param tag 显示状态传入的tag
      */
     fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
-        if (container.status != status) container.removeView(state)
+        if (container.status != status) {
+            state.visibility = View.GONE
+        }
     }
 
     /**
@@ -28,6 +30,10 @@ interface StateChangedHandler {
      * @param tag 显示状态传入的tag
      */
     fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
-        if (state.parent == null) container.addView(state)
+        if (container.indexOfChild(state) != -1) {
+            state.visibility = View.VISIBLE
+        } else {
+            container.addView(state)
+        }
     }
 }

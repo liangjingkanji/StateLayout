@@ -32,10 +32,10 @@ open class FadeStateChangedHandler(var duration: Long = 400) : StateChangedHandl
         // 初次加载不应用动画
         if (container != stateLayout.get() && container.status == Status.LOADING) {
             stateLayout = WeakReference(container)
-            return super.onAdd(container, state, status, tag)
+            return StateChangedHandler.onAdd(container, state, status, tag)
         }
-        state.alpha = 0f
         super.onAdd(container, state, status, tag)
+        state.alpha = 0f
         state.animate().setDuration(duration).alpha(1f).start()
     }
 }
