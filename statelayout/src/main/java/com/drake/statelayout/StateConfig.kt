@@ -51,13 +51,6 @@ object StateConfig {
     @JvmStatic
     var stateChangedHandler: StateChangedHandler = StateChangedHandler
 
-    /**
-     * 设置[setRetryIds]点击重试要求网络可用才会显示加载缺省,
-     * 会回调[StateLayout.onRefresh]但不会回调[StateLayout.onLoading]
-     * 为避免无网络情况下点击重试导致闪屏
-     */
-    var isNetworkingRetry = true
-
     /** 防抖动点击事件的间隔时间, 单位毫秒 */
     @JvmStatic
     var clickThrottle: Long = 500
@@ -97,8 +90,6 @@ object StateConfig {
     /**
      * 会为所有[StateLayout.emptyLayout]/[StateLayout.errorLayout]中的指定Id的视图对象添加一个点击事件
      * 该点击事件会触发[StateLayout.showLoading], 同时500ms内防抖动
-     *
-     * @see isNetworkingRetry 点击重试是否检查网络
      */
     @JvmStatic
     fun setRetryIds(@IdRes vararg ids: Int) {

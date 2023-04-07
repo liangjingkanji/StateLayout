@@ -14,9 +14,4 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.drake.statelayout">
-    <!--com.drake.statelayout.StateLayout.isNetworking
-    This is avoid no network show Loading, You can also remove this permission-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-</manifest>
+<manifest package="com.drake.statelayout" />
