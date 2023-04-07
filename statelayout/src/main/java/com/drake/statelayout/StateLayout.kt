@@ -72,6 +72,12 @@ class StateLayout @JvmOverloads constructor(
         get() = field ?: StateConfig.onLoading
     private var onRefresh: (StateLayout.(tag: Any?) -> Unit)? = null
 
+    /** 当前缺省页状态[Status] */
+    var status = CONTENT
+        private set
+
+    // <editor-fold desc="设置缺省页">
+
     /** 当前缺省页是否加载成功过, 即是否执行过[showContent]*/
     var loaded = false
 
@@ -82,11 +88,11 @@ class StateLayout @JvmOverloads constructor(
      */
     var isNetworkingRetry = StateConfig.isNetworkingRetry
 
-    /** 当前缺省页状态[Status] */
-    var status = CONTENT
-        private set
+    /** 防抖动点击事件的间隔时间, 单位毫秒 */
+    var clickThrottle: Long = StateConfig.clickThrottle
 
-    // <editor-fold desc="设置缺省页">
+    /** 处理缺省页状态变更 */
+    var stateChangedHandler: StateChangedHandler = StateConfig.stateChangedHandler
 
     /** 错误页面布局 */
     @LayoutRes
@@ -120,9 +126,6 @@ class StateLayout @JvmOverloads constructor(
                 field = value
             }
         }
-
-    /** 处理缺省页状态变更 */
-    var stateChangedHandler: StateChangedHandler = StateConfig.stateChangedHandler
 
     // </editor-fold>
 
@@ -304,7 +307,7 @@ class StateLayout @JvmOverloads constructor(
                 stateChangedHandler.onAdd(this, targetStatusView, status, tag)
                 if (status == EMPTY || status == ERROR) {
                     retryIds?.forEach {
-                        targetStatusView.findViewById<View>(it)?.throttleClick {
+                        targetStatusView.findViewById<View>(it)?.throttleClick(clickThrottle) {
                             showLoading(tag = statusMap[LOADING]?.tag, silent = isNetworkingRetry && !isNetworking())
                         }
                     }
