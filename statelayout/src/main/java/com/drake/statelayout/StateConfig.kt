@@ -58,6 +58,10 @@ object StateConfig {
      */
     var isNetworkingRetry = true
 
+    /** 防抖动点击事件的间隔时间, 单位毫秒 */
+    @JvmStatic
+    var clickThrottle: Long = 500
+
     /**
      * 全局的空缺省页显示回调
      */
