@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.view.View
 import com.drake.statelayout.StateChangedHandler
+import com.drake.statelayout.StateChangedHandler.DEFAULT.onAdd
 import com.drake.statelayout.StateLayout
 import com.drake.statelayout.Status
 import java.lang.ref.WeakReference
@@ -16,8 +17,15 @@ open class FadeStateChangedHandler(var duration: Long = 400) : StateChangedHandl
 
     private var stateLayout: WeakReference<StateLayout> = WeakReference(null)
 
+    /**
+     * StateLayout删除缺省页, 此方法比[onAdd]先执行
+     * @param container StateLayout
+     * @param state 将被删除缺省页视图对象
+     * @param status 当前状态
+     * @param tag 显示状态传入的tag
+     */
     override fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
-        if (container != stateLayout.get() && container.status == Status.LOADING) {
+        if (container != stateLayout.get() && status == Status.LOADING) {
             return super.onRemove(container, state, status, tag)
         }
         state.animate().setDuration(duration).alpha(0f).setListener(object : AnimatorListenerAdapter() {
@@ -28,9 +36,16 @@ open class FadeStateChangedHandler(var duration: Long = 400) : StateChangedHandl
         }).start()
     }
 
+    /**
+     * StateLayout添加缺省页
+     * @param container StateLayout
+     * @param state 将被添加缺省页视图对象
+     * @param status 当前状态
+     * @param tag 显示状态传入的tag
+     */
     override fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
         // 初次加载不应用动画
-        if (container != stateLayout.get() && container.status == Status.LOADING) {
+        if (container != stateLayout.get() && status == Status.LOADING) {
             stateLayout = WeakReference(container)
             return StateChangedHandler.onAdd(container, state, status, tag)
         }
