@@ -20,9 +20,6 @@ package com.drake.statelayout
 
 import android.content.Context
 import android.content.res.Resources
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.ArrayMap
@@ -33,8 +30,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import com.drake.statelayout.StateConfig.isNetworkingRetry
-import com.drake.statelayout.StateConfig.setRetryIds
 import com.drake.statelayout.Status.*
 
 /**
@@ -80,13 +75,6 @@ class StateLayout @JvmOverloads constructor(
 
     /** 当前缺省页是否加载成功过, 即是否执行过[showContent]*/
     var loaded = false
-
-    /**
-     * 设置[setRetryIds]点击重试要求网络可用才会显示加载缺省,
-     * 会回调[StateLayout.onRefresh]但不会回调[StateLayout.onLoading]
-     * 为避免无网络情况下点击重试导致闪屏
-     */
-    var isNetworkingRetry = StateConfig.isNetworkingRetry
 
     /** 防抖动点击事件的间隔时间, 单位毫秒 */
     var clickThrottle: Long = StateConfig.clickThrottle
@@ -268,8 +256,6 @@ class StateLayout @JvmOverloads constructor(
     /**
      * 会为所有[StateLayout.emptyLayout]/[StateLayout.errorLayout]中的指定Id的视图对象添加一个点击事件
      * 该点击事件会触发[StateLayout.showLoading], 同时500ms内防抖动
-     *
-     * @see isNetworkingRetry 点击重试是否检查网络
      */
     fun setRetryIds(@IdRes vararg ids: Int) = apply {
         retryIds = ids
@@ -308,7 +294,7 @@ class StateLayout @JvmOverloads constructor(
                 if (status == EMPTY || status == ERROR) {
                     retryIds?.forEach {
                         targetStatusView.findViewById<View>(it)?.throttleClick(clickThrottle) {
-                            showLoading(tag = statusMap[LOADING]?.tag, silent = isNetworkingRetry && !isNetworking())
+                            showLoading(tag = statusMap[LOADING]?.tag)
                         }
                     }
                 }
@@ -365,29 +351,6 @@ class StateLayout @JvmOverloads constructor(
      */
     fun setContent(view: View) {
         statusMap[CONTENT] = StatusInfo(view, null)
-    }
-
-    /**
-     * 是否处于联网中
-     */
-    private fun isNetworking(): Boolean {
-        val connectivityManager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val network = connectivityManager.activeNetwork ?: return false
-                val actNw = connectivityManager.getNetworkCapabilities(network) ?: return false
-                when {
-                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                    else -> false
-                }
-            } else {
-                connectivityManager.activeNetworkInfo?.isConnected == true
-            }
-        } catch (e: Exception) {
-            true
-        }
     }
 
     /**
