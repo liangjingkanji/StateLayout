@@ -15,6 +15,7 @@ interface StateChangedHandler {
      * StateLayout删除缺省页, 此方法比[onAdd]先执行
      * @param container StateLayout
      * @param state 将被删除缺省页视图对象
+     * @param status 当前状态
      * @param tag 显示状态传入的tag
      */
     fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
@@ -27,6 +28,7 @@ interface StateChangedHandler {
      * StateLayout添加缺省页
      * @param container StateLayout
      * @param state 将被添加缺省页视图对象
+     * @param status 当前状态
      * @param tag 显示状态传入的tag
      */
     fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
