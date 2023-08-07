@@ -1,6 +1,6 @@
 <p align="center"><img src="https://i.loli.net/2021/08/14/kqTVfluhDo3tAHU.gif" width="30%"/></p>
 
-StateLayout布局包裹的内容才能控制其显示缺省页
+缺省页存在不同的状态, 可以称为状态页, 而StateLayout布局包裹的视图叫内容视图
 
 <br>
 
@@ -27,20 +27,19 @@ StateLayout布局包裹的内容才能控制其显示缺省页
     
     </com.drake.statelayout.StateLayout>
     ```
-=== "代码包裹"
-    本方法不推荐使用, 建议在Xml布局中创建StateLayout, 可保持代码可读性且避免不必要的问题发生, 性能也更优, 请注意反复调用本方法会反复创建StateLayout导致发生问题
+=== "代码创建"
+    出于性能和问题考虑不推荐使用, 反复调用本方法会反复创建StateLayout导致发生问题
     ```kotlin
-    stateCreate() // 该函数可以在 Activity/Fragment中使用, 或者 View.stateCreate()
+    stateCreate() // 可在 Activity/Fragment/View 中使用
     ```
 
-> 比如ViewPager中的Fragment不能使用`stateCreate()`创建, 因为其ViewPager的视图容器无法被替换
 <br>
 
-## 设置缺省页
+## 配置缺省页
 
-设置缺省页可以通过两种方式设置
+指定状态页可以两种方式
 
-=== "代码设置"
+=== "代码配置"
     ```kotlin
     state.apply {
         emptyLayout = R.layout.layout_empty // 配置空布局
@@ -49,7 +48,7 @@ StateLayout布局包裹的内容才能控制其显示缺省页
     }
     ```
 
-=== "布局属性设置"
+=== "布局配置"
     ```xml hl_lines="5 6 7"
     <com.drake.statelayout.StateLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -80,4 +79,4 @@ state.showEmpty()
 state.showError()
 state.showContent()
 ```
-这些`show*()`函数都有一个Any参数, 可以传递任何对象到[生命周期](callback.md)中, 进行定制化展示不同的缺省页
+`showXX()`都有一个Any参数(标签), 可以传递对象到[生命周期](callback.md)中, 进行定制化展示

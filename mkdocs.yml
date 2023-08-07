@@ -1,48 +1,83 @@
 site_name: StateLayout
-site_author: drake
 site_description: StateLayout document
-copyright: Copyright &copy; 2018 - 2020 劉強東
-
-repo_name: GitHub
 repo_url: https://github.com/liangjingkanji/StateLayout
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/liangjingkanji
+    - icon: fontawesome/brands/qq
+      link: https://raw.githubusercontent.com/liangjingkanji/liangjingkanji/master/img/group-qrcode.png
 
+site_author: 劉強東
+copyright: Copyright &copy; 2018 - 2023 劉強東
+repo_name: GitHub
+docs_dir: 'docs'
 extra_css:
   - css/extra.css
-
-docs_dir: 'docs'
-
 theme:
   name: material
   custom_dir: docs/material
-
+  favicon: img/book-open.svg
+  logo: img/book-open.svg
   palette:
-    scheme: drake
-    primary: white
-
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
   font: false
-
   language: zh
-
+  features:
+    - navigation.top
+    - navigation.prune
+    - navigation.footer
+    - navigation.instant
+    - search.highlight
+    - search.suggest
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+plugins:
+  - offline
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+      lang:
+        - en
+        - zh
 markdown_extensions:
   - toc:
       permalink: true
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.inlinehilite
-  - pymdownx.tabbed
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - attr_list
+  - def_list
+  - md_in_html
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.details
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
 
 nav:
   - 使用: index.md
-  - 生命周期: callback.md
-  - 全局配置: global.md
-  - 传递标签: transfer.md
+  - 标签: tag.md
   - 点击重试: retry.md
+  - 生命周期: callback.md
+  - 全局配置: config.md
   - 多状态: multi-state.md
-  - 动画/布局: animation.md
+  - 动画: animation.md
   - 骨骼动画: skeleton.md
-  - 自动显示: extension.md
+  - 网络请求: https://liangjingkanji.github.io/Net/auto-state.html
   - 常见问题: issues.md
   - 1.x文档: api/index.html

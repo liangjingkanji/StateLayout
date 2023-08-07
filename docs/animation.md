@@ -1,10 +1,11 @@
-在[生命周期](callback.md)中就提到StateLayout可以直接监听获取到缺省页的视图对话, 很方便地添加自定义动画
+在[生命周期](callback.md)中获取视图添加自定义动画
 
-> 不推荐盲目追求动画, 过度动画会拖慢应用响应速度, 用户使用体验可能不太好 <br>
+!!! warning "动画缺点"
+    过度使用动画会拖慢响应速度, 用户使用体验可能不太好
 
 ## 缺省页显示动画
 
-这里演示如何创建缺省页显示时播放渐变动画, 如果想要其他动画可以自己拓展
+以下为缺省页渐变动画演示
 
 <img src="https://i.loli.net/2021/08/14/97rDSVuKIodF1wO.gif" width="250"/>
 
@@ -38,62 +39,67 @@
     }
     ```
 
-    当然你也可以仅设置你指定的缺省页动画
+    当然也可以仅设置你指定的缺省页动画
 
 
 ## 缺省页切换动画
 
-上面介绍的只是显示动画, 我们可能还需要处理前一个状态的隐藏以及新的状态的显示, 那么就需要实现接口`StateChangedHandler`自定义处理
+如果需要处理前一个状态的隐藏以及新的状态的显示, 那么就得实现接口`StateChangedHandler`自定义处理
 
-默认自带一个渐变透明处理者可以参考他的逻辑替换为其他动画框架
+框架自带一个渐变透明`FadeStateChangedHandler`
 
-```kotlin
-/**
- * 切换状态时使用渐变透明动画过渡
- * @param duration 动画执行时间
- */
-open class FadeStateChangedHandler(var duration: Long = 400) : StateChangedHandler {
+??? example "参考源码 FadeStateChangedHandler.kt"
+    ```kotlin
+    /**
+     * 切换状态时使用渐变透明动画过渡
+     * @param duration 动画执行时间
+     */
+    open class FadeStateChangedHandler(var duration: Long = 400) : StateChangedHandler {
 
-    private var stateLayout: StateLayout? = null
+        private var stateLayout: WeakReference<StateLayout> = WeakReference(null)
 
-    override fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
-        if (container != stateLayout && container.status == Status.LOADING) {
-            return super.onRemove(container, state, status, tag)
-        }
-        state.animate().setDuration(duration).alpha(0f).setListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                // 等待动画执行完毕后删除旧的缺省页视图
-                StateChangedHandler.onRemove(container, state, status, tag)
+        /**
+         * StateLayout删除缺省页, 此方法比[onAdd]先执行
+         * @param container StateLayout
+         * @param state 将被删除缺省页视图对象
+         * @param status 当前状态
+         * @param tag 显示状态传入的tag
+         */
+        override fun onRemove(container: StateLayout, state: View, status: Status, tag: Any?) {
+            if (container != stateLayout.get() && status == Status.LOADING) {
+                return super.onRemove(container, state, status, tag)
             }
-        }).start()
-    }
-
-    override fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
-        // 初次加载不应用动画
-        if (container != stateLayout && container.status == Status.LOADING) {
-            stateLayout = container
-            return super.onAdd(container, state, status, tag)
+            state.animate().setDuration(duration).alpha(0f).setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    // 等待动画执行完毕后删除旧的缺省页视图
+                    StateChangedHandler.onRemove(container, state, status, tag)
+                }
+            }).start()
         }
-        state.alpha = 0f
-        super.onAdd(container, state, status, tag)
-        state.animate().setDuration(duration).alpha(1f).start()
+
+        /**
+         * StateLayout添加缺省页
+         * @param container StateLayout
+         * @param state 将被添加缺省页视图对象
+         * @param status 当前状态
+         * @param tag 显示状态传入的tag
+         */
+        override fun onAdd(container: StateLayout, state: View, status: Status, tag: Any?) {
+            // 初次加载不应用动画
+            if (container != stateLayout.get() && status == Status.LOADING) {
+                stateLayout = WeakReference(container)
+                return StateChangedHandler.onAdd(container, state, status, tag)
+            }
+            super.onAdd(container, state, status, tag)
+            state.alpha = 0f
+            state.animate().setDuration(duration).alpha(1f).start()
+        }
     }
-}
-```
+    ```
 
 
-可以全局配置或者单例配置
+可以全局/单例配置
 
 ```kotlin
-// 单例
-state.stateChangedHandler = StateChangedHandler()
-
-// 全局
 StateConfig.stateChangedHandler = StateChangedHandler()
 ```
-
-
-## 骨骼动画
-
-骨骼动画只是一种加载中状态动画, 你可以使用Gif图或者动画框架播放设计师提供的动画文件, 比如常用的[Lottie](https://airbnb.design/lottie/)动画框架创建一个xml布局包含动画控件即可自动播放
-

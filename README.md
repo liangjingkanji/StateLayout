@@ -37,7 +37,7 @@
 - [x] 快速配置点击重试
 - [x] 监听缺省页回调
 - [x] 自定义动画/布局
-- [x] [骨骼动画](https://liangjingkanji.github.io/StateLayout/skeleton/)
+- [x] [骨骼动画](https://liangjingkanji.github.io/StateLayout/skeleton.html)
 - [x] 传递标签
 - [x] 异步线程使用
 - [x] 自定义缺省页切换处理
