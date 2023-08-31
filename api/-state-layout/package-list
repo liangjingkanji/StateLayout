@@ -1,0 +1,52 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.drake.statelayout////PointingToDeclaration/-state-layout/com.drake.statelayout/index.html
+$dokka.location:com.drake.statelayout//state/android.app.Activity#/PointingToDeclaration/-state-layout/com.drake.statelayout/state.html
+$dokka.location:com.drake.statelayout//state/android.view.View#/PointingToDeclaration/-state-layout/com.drake.statelayout/state.html
+$dokka.location:com.drake.statelayout//state/androidx.fragment.app.Fragment#/PointingToDeclaration/-state-layout/com.drake.statelayout/state.html
+$dokka.location:com.drake.statelayout/StateChangedHandler///PointingToDeclaration/-state-layout/com.drake.statelayout/-state-changed-handler/index.html
+$dokka.location:com.drake.statelayout/StateChangedHandler/StateChangedHandler/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-changed-handler/-state-changed-handler.html
+$dokka.location:com.drake.statelayout/StateChangedHandler/onAdd/#com.drake.statelayout.StateLayout#android.view.View#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-changed-handler/on-add.html
+$dokka.location:com.drake.statelayout/StateChangedHandler/onRemove/#com.drake.statelayout.StateLayout#android.view.View#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-changed-handler/on-remove.html
+$dokka.location:com.drake.statelayout/StateConfig///PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/index.html
+$dokka.location:com.drake.statelayout/StateConfig/emptyLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/empty-layout.html
+$dokka.location:com.drake.statelayout/StateConfig/errorLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/error-layout.html
+$dokka.location:com.drake.statelayout/StateConfig/loadingLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/loading-layout.html
+$dokka.location:com.drake.statelayout/StateConfig/onContent/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-content.html
+$dokka.location:com.drake.statelayout/StateConfig/onEmpty/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-empty.html
+$dokka.location:com.drake.statelayout/StateConfig/onError/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-error.html
+$dokka.location:com.drake.statelayout/StateConfig/onLoading/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/on-loading.html
+$dokka.location:com.drake.statelayout/StateConfig/setRetryIds/#kotlin.IntArray/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/set-retry-ids.html
+$dokka.location:com.drake.statelayout/StateConfig/stateChangedHandler/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-config/state-changed-handler.html
+$dokka.location:com.drake.statelayout/StateLayout///PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/index.html
+$dokka.location:com.drake.statelayout/StateLayout/StateLayout/#android.content.Context#android.util.AttributeSet?#kotlin.Int/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/-state-layout.html
+$dokka.location:com.drake.statelayout/StateLayout/emptyLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/empty-layout.html
+$dokka.location:com.drake.statelayout/StateLayout/errorLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/error-layout.html
+$dokka.location:com.drake.statelayout/StateLayout/loaded/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/loaded.html
+$dokka.location:com.drake.statelayout/StateLayout/loadingLayout/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/loading-layout.html
+$dokka.location:com.drake.statelayout/StateLayout/onContent/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-content.html
+$dokka.location:com.drake.statelayout/StateLayout/onEmpty/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-empty.html
+$dokka.location:com.drake.statelayout/StateLayout/onError/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-error.html
+$dokka.location:com.drake.statelayout/StateLayout/onLoading/#kotlin.Function2[android.view.View,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-loading.html
+$dokka.location:com.drake.statelayout/StateLayout/onRefresh/#kotlin.Function2[com.drake.statelayout.StateLayout,kotlin.Any?,kotlin.Unit]/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/on-refresh.html
+$dokka.location:com.drake.statelayout/StateLayout/setContent/#android.view.View/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/set-content.html
+$dokka.location:com.drake.statelayout/StateLayout/setRetryIds/#kotlin.IntArray/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/set-retry-ids.html
+$dokka.location:com.drake.statelayout/StateLayout/showContent/#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-content.html
+$dokka.location:com.drake.statelayout/StateLayout/showEmpty/#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-empty.html
+$dokka.location:com.drake.statelayout/StateLayout/showError/#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-error.html
+$dokka.location:com.drake.statelayout/StateLayout/showLoading/#kotlin.Any?#kotlin.Boolean#kotlin.Boolean/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/show-loading.html
+$dokka.location:com.drake.statelayout/StateLayout/stateChangedHandler/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/state-changed-handler.html
+$dokka.location:com.drake.statelayout/StateLayout/status/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/status.html
+$dokka.location:com.drake.statelayout/StateLayout/trigger/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-layout/trigger.html
+$dokka.location:com.drake.statelayout/StatePair///PointingToDeclaration/-state-layout/com.drake.statelayout/-state-pair/index.html
+$dokka.location:com.drake.statelayout/StatePair/StatePair/#android.view.View#kotlin.Any?/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-pair/-state-pair.html
+$dokka.location:com.drake.statelayout/StatePair/first/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-pair/first.html
+$dokka.location:com.drake.statelayout/StatePair/second/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-pair/second.html
+$dokka.location:com.drake.statelayout/StatePair/toString/#/PointingToDeclaration/-state-layout/com.drake.statelayout/-state-pair/to-string.html
+$dokka.location:com.drake.statelayout/Status.CONTENT///PointingToDeclaration/-state-layout/com.drake.statelayout/-status/-c-o-n-t-e-n-t/index.html
+$dokka.location:com.drake.statelayout/Status.EMPTY///PointingToDeclaration/-state-layout/com.drake.statelayout/-status/-e-m-p-t-y/index.html
+$dokka.location:com.drake.statelayout/Status.ERROR///PointingToDeclaration/-state-layout/com.drake.statelayout/-status/-e-r-r-o-r/index.html
+$dokka.location:com.drake.statelayout/Status.LOADING///PointingToDeclaration/-state-layout/com.drake.statelayout/-status/-l-o-a-d-i-n-g/index.html
+$dokka.location:com.drake.statelayout/Status///PointingToDeclaration/-state-layout/com.drake.statelayout/-status/index.html
+com.drake.statelayout
+
