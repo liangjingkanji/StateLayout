@@ -221,8 +221,8 @@ class StateLayout @JvmOverloads constructor(
         silent: Boolean = false,
         refresh: Boolean = true,
     ) {
-        if (refresh) onRefresh?.invoke(this, tag)
         if (!silent) showStatus(LOADING, tag)
+        if (refresh) onRefresh?.invoke(this, tag)
     }
 
     /**
